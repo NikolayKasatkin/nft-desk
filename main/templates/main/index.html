@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFT desk</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
+
+    <script async type="text/javascript" src="{% static 'main/js/index.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'main/css/index.css' %}">
+
+  </head>
+  <body onload="PostAddressAccount()" id="body">
+
+
+    <nav class="menu">
+    <div class="addpaymant">
+        <div>
+            <img src="{% static 'main/images/Icon/add.png' %}" alt="">
+            <buttom onclick="getAccount()"><div id="result"></div></buttom>
+        </div>
+    </div>
+    <div class="logo">
+        <h1>NFT desk</h1>
+    </div>
+    </nav>
+
+
+      <div class="information">
+          <div class="img_of_nft">
+              <img id="idImg" alt="" src="/media/images/green.png">
+          </div>
+          <div class="h1of">
+              <div class="information_owner" id="ownerOf"></div>
+          </div>
+          <div class="h2of">
+              <div class="h2of_idnft" style="font-size: 24px;" id="idnft"></div>
+          </div>
+
+          <div class="button_save">
+              <button type="button" name="button" class="" style="visibility: hidden" id='#Id'>BUY</button>
+          </div>
+
+          <div class="option">
+              <div class="option_description" id="description" style="visibility: hidden"></div>
+          </div>
+          <div class="paymentclass">
+
+              <div class="crypto_coin">
+                  <img class="cr" src="{% static 'main/images/crypto.png' %}" alt="">
+
+                  <div class="crytpo_wallet">
+                      <img src="{% static 'main/images/metamask.png' %}" alt="">
+                  </div>
+              </div>
+              <div class="Name_of">
+                  <p>Metamask Etherium</p>
+              </div>
+          </div>
+      </div>
+
+
+
+      <!--
+     БЛОК ДЛЯ редактирования картинки и описания
+  -->
+      <div class="buy_info">
+          <div class="form">
+
+              <form id="forma" method="post" enctype="multipart/form-data" style="display: none">
+                <div class="uplod_div">
+                    <img class="upload" src="{% static 'main/images/upload.png' %}">
+                    <h1>ЗАГРУЗИТЕ ФОТО</h1>
+                </div>
+                {% csrf_token %}
+                {{ form.image }}<br><br><br>
+                <label>Описание</label><br>
+                {{ form.description }}<br>
+                {{ form.id_nft }}<br>
+                <span>{{ error }}</span>
+
+                <div class="special_name" id="idnft2"></div>
+
+                <div class="button_save">
+                    <button type="submit" >SAVE</button>
+                </div>
+
+              </form>
+
+          </div>
+
+      </div>
+
+
+      <div class="top_box"></div>
+      <div class="left_box"></div>
+      <div class="right_box"></div>
+      <div class="bottom_box"></div>
+      <div class="bottom_botoom"></div>
+      <div class="top_top"></div>
+
+
+      <!-- Заполнить БД -->
+      <!-- <button type="button" name="button" onclick="bdwrite()">write</button> -->
+
+      <div id="map" class="map">
+        {% for i in images %}
+          <div class="nft">
+            <img id="{{i.id_nft}}" class="nft_img" src="{{i.image.url}}" alt="">
+          </div>
+        {% endfor %}
+      </div>
+
+
+  </body>
+</html>

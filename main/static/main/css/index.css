@@ -1,0 +1,502 @@
+html{
+  overflow:  hidden;
+  touch-action: none;
+}
+#map{
+  /* margin-left: 50px; */
+  margin-top: 0;
+  margin-left: 0;
+  width: 500vw;
+  height: 1000vw;
+  position:absolute;
+  transform: scale(1, 1);
+  z-index: 1;
+}
+.nft{
+  width: 1%;
+  height: .5%;
+  float: left;
+  display: inline-block;
+  /* border: solid;
+  border-width: 1px; */
+  margin: 0 0 0 0;
+}
+.nft_img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 0 0;
+}
+.zoom{
+  position: absolute;
+  top: 40px;
+  left: 12vw;
+}
+.unzoom{
+  position: absolute;
+  top: 60px;
+  left: 12vw;
+}
+#minimap{
+  width: 10vw;
+  height: 10vw;
+  position: absolute;
+  top: 40px; left: 40px;
+}
+img{
+  width: 100%;
+  height: 100%;
+  /* display: none; */
+}
+
+.top_box{
+  width: 100vw;
+  height: 10vh;
+  background-color: white;
+  z-index: 2;
+  position: absolute;
+  border-bottom: solid;
+  border-width: 2px;
+  left: 10vw;
+}
+
+.bottom_box{
+  width: 75vw;
+  height: 10vh;
+  background-color: white;
+  z-index: 2;
+  position: absolute;
+  top: 90vh;
+  border-top: solid;
+  border-width: 2px;
+  left: 20vw;
+}
+
+.left_box{
+  width: 20vw;
+  height: 100vh;
+  background-color: white;
+  z-index: 2;
+  position: absolute;
+  border-right: solid;
+  border-width: 2px;
+}
+
+.right_box{
+  width: 5vw;
+  height: 100vh;
+  background-color: white;
+  z-index: 2;
+  position: absolute;
+  left: 95vw;
+  border-left: solid;
+  border-width: 2px;
+  top: 10vh;
+}
+
+.bottom_botoom{
+  width: 10vw;
+  height: 9.9vh;
+  background-color: white;
+  z-index: 2;
+  position: absolute;
+  top: 90.1vh;
+  left: 90vw;
+}
+
+.top_top{
+  width: 20.2vw;
+  height: 10vh;
+  background-color: white;
+  z-index: 2;
+  position: absolute;
+}
+
+
+.form-control2{
+  visibility: hidden;
+  height: 10px;
+}
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+.menu{
+    margin-top:0;
+    position: relative;
+    width: 100%;
+    z-index: 4;
+}
+
+
+.logo{
+    display: inline-block;
+    position: absolute;
+    top:0;
+    left: 45%;
+}
+
+.logo h1{
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    font-weight: 700;
+    font-size: 46px;
+    line-height: 77px;
+
+}
+
+.addpaymant{
+    display: flex;
+    position: absolute;
+    top:23px;
+    left: 4%;
+    cursor: pointer;
+
+
+}
+
+.addpaymant div{
+
+    font-family: 'Inter', sans-serif;
+    text-decoration: none;
+    color: black;
+    display: flex;
+    font-size: 20px;
+
+}
+
+.addpaymant div buttom{
+    margin-left: 4px;
+}
+
+.addpaymant img{
+    width: 20px;
+    height: 20px;
+
+}
+
+
+.information{
+    position: absolute;
+    border-radius: 20px;
+    margin-top: 10vh;
+    margin-left: .5vw;
+    width: 400px;
+    height: auto;
+    background-color: white;
+    /* display: none; */
+    filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.25));
+    z-index: 3;
+}
+
+.img_of_nft{
+  width: 338px;
+  height: 370px;
+  margin-top: 32px;
+  margin-left: 31px;
+  margin-right: 31px;
+}
+.information .img_of_nft img{
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+    object-position: 0 0 3px 0;
+
+}
+
+.information h1{
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    margin-left: 31px;
+    margin-top: 10px;
+}
+
+.information_owner{
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  margin-left: 31px;
+  margin-top: 10px;
+}
+
+.h2of h2{
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    margin-left: 31px;
+    margin-top: 5px;
+
+}
+
+.h2of_idnft{
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  margin-left: 31px;
+  margin-top: 5px;
+}
+
+
+.option p{
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    margin-left: 31px;
+    margin-top: 40px;
+
+}
+
+.option_description{
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  margin-left: 31px;
+  margin-top: 40px;
+}
+
+.paymentclass{
+    margin-top: 40px;
+    margin-left: 31px;
+    margin-bottom: 40px;
+    display: flex;
+
+}
+
+.crypto_coin img{
+    border-radius:30px;
+
+}
+
+.crypto_coin{
+    position: relative;
+    display: inline-block;
+}
+
+.cr{
+    width: 35px;
+    height: 35px;
+}
+
+.crytpo_wallet img{
+    width: 10px;
+    height: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.crytpo_wallet{
+    display: flex;
+    border-radius:30px;
+    display: inline-block;
+    padding-left: 3px;
+    padding-right: 3px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    right: -0.5px;
+    bottom: 0px;
+}
+
+.Name_of{
+    display: flex;
+    margin-left: 10px;
+    margin-top:10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.buy_info{
+    position: absolute;
+    border-radius: 20px;
+    background-color: white;
+    filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.25));
+    top:200px;
+    right:.5vw;
+    z-index: 3;
+}
+.photo{
+    display: flex;
+}
+
+.upload{
+    width: 19px;
+    height: 19px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.photo h1{
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.uplod_div{
+    display: flex;
+    margin-left: 10px;
+    align-items: center;
+}
+
+.uplod_div h1{
+    margin-left: 4px;
+    font-size: 30px;
+}
+
+.input_name{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 35px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    border: none;
+    padding-left: 4px;
+    padding-top: 10px;
+
+}
+
+.input_option{
+    margin-top: 10px;
+    width: 100%;
+    height:120px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    border: none;
+    resize: none;
+}
+
+
+.form-control{
+  height: 60px;
+  margin-left: 50px;
+  margin-top: 10px;
+}
+
+.form-control3{
+    margin-top: 10px;
+    width: 90%;
+    margin-left: 5%;
+    height:120px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    border: none;
+    resize: none;
+    padding: 2px;
+}
+.form-control3:focus{
+  outline: 0;
+  outline-offset: 0;
+}
+
+.form {
+    margin-top: 30px;
+    font-family: 'Inter', sans-serif;
+
+}
+.form label{
+    font-size: 17px;
+    font-weight: 800;
+    margin-left: 20px;;
+}
+
+.Xcor{
+    display: flex;
+}
+.Ycor{
+    display: flex;
+}
+.cordinate{
+    display: flex;
+}
+.cordx{
+    width: 54px;
+    height: 35px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    width: 100%;
+    min-width: 54px;
+    padding-left: 8px;
+    padding-right: 8px;
+
+}
+.cordy{
+    width: 54px;
+    height: 35px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    width: 100%;
+    min-width: 54px;
+    padding: 2px;
+    padding-left: 8px;
+    padding-right: 8px;
+
+
+}
+
+.cordx p{
+    text-align: center;
+    margin-top: 7px;
+
+}
+.cordy p {
+    text-align: center;
+    margin-top: 7px;
+}
+
+.cordinate h3{
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    align-items: center;
+}
+
+.Xcor h3{
+    margin-top: 5px;
+    margin-right: 4px;
+}
+
+.Ycor h3{
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-right: 4px;
+}
+
+.special_name{
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    margin-left: 20px;
+}
+
+.button_save button{
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 20px;
+    height: 50px;
+    background: #000000;
+    margin-top: 30px;
+    border-radius: 30px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
