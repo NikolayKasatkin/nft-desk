@@ -30,9 +30,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-grx5r&#8$-rxk1e7k8rax80qevjry5lg4mcpyi1m*-!n*$!*%l23'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['www.ndesk.io',]
+ALLOWED_HOSTS = ['*','www.ndesk.io',]
 
 
 # Application definition
@@ -125,10 +125,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/home/nftdesk/nft-desk/static'
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/nftdesk/nft-desk/media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#ДЛЯ ХОСТА********************************************
+# STATIC_URL = '/static/'
+# STATIC_ROOT = '/home/nftdesk/nft-desk/static'
+#
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = '/home/nftdesk/nft-desk/media'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
