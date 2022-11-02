@@ -560,7 +560,7 @@ let abi = [
 let myAddress = '0x95Ce19Ab4AF262711D4Af1974f1E03045e3d5527';
 
 const WEB3_PROVIDER = "https://mainnet.infura.io/v3/";
-var web3;
+// var web3;
 
 async function web3providerMetamask(){
 	if (typeof window.ethereum !== 'undefined') {
@@ -571,43 +571,61 @@ async function web3providerMetamask(){
 		.then(handleAccountsChanged)
 		.catch(console.error);
 	} else {
-//       web3 = new Web3(new Web3.providers.HttpProvider(WEB3_PROVIDER));
-// 			console.log('Please install MetaMask!');
-      window.addEventListener('ethereum#initialized', handleEthereum, {
-        once: true,
-      });
-
-      // If the event is not dispatched by the end of the timeout,
-      // the user probably doesn't have MetaMask installed.
-      setTimeout(handleEthereum, 3000); // 3 seconds
+      web3 = new Web3(new Web3.providers.HttpProvider(WEB3_PROVIDER));
+			console.log('Please install MetaMask!');
 	}
 }
 
 async function getAccount() {
-  if (typeof window.ethereum !== 'undefined') {
-    web3 = new Web3(web3.currentProvider);
-	  console.log('MetaMask is installed!');
-    ToPolygonNet();
-  	ethereum
-  			.request({ method: 'eth_requestAccounts'})
-  			.then(handleAccountsChanged)
-  			.catch((err) => {
-  					if (err.code === 4001) {
-  							console.log('Please connect to MetaMask.');
-  					} else {
-  							console.error(err);
-  					}
-  			});
-	} else {
-      window.addEventListener('ethereum#initialized', handleEthereum, {
-        once: true,
-      });
-      console.log('fu3hcmuth4mmudifxhdi');
+    var myMobile = {
+  			Android: function() {
+  					return navigator.userAgent.match(/Android/i);
+  			},
+  			BlackBerry: function() {
+  					return navigator.userAgent.match(/BlackBerry/i);
+  			},
+  			iOS: function() {
+  					return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+  			},
+  			Opera: function() {
+  					return navigator.userAgent.match(/Opera Mini/i);
+  			},
+  			Windows: function() {
+  					return navigator.userAgent.match(/IEMobile/i);
+  			},
+  			any: function() {
+  					return (myMobile.Android() ||
+  									myMobile.BlackBerry() ||
+  									myMobile.iOS() ||
+  									myMobile.Opera() ||
+  									myMobile.Windows());
+  			}
+  	};
+  	if( myMobile.any() && typeof window.ethereum == 'undefined') {
+  			document.location.href = "https://metamask.app.link/dapp/ndesk.io/";
+  	} else {
+          if (typeof window.ethereum !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        	  console.log('MetaMask is installed!');
+            ToPolygonNet();
+          	ethereum
+          			.request({ method: 'eth_requestAccounts'})
+          			.then(handleAccountsChanged)
+          			.catch((err) => {
+          					if (err.code === 4001) {
+          							console.log('Please connect to MetaMask.');
+          					} else {
+          							console.error(err);
+          					}
+          			});
+        	} else {
+              web3 = new Web3(new Web3.providers.HttpProvider(WEB3_PROVIDER));
+        			console.log('Please install MetaMask!');
+              alert('Please install MetaMask!');
+        }
+  	}
 
-      // If the event is not dispatched by the end of the timeout,
-      // the user probably doesn't have MetaMask installed.
-      setTimeout(handleEthereum, 3000); // 3 seconds
-	}
+
 }
 
 function handleEthereum() {
@@ -619,43 +637,120 @@ function handleEthereum() {
     console.log('Please install MetaMask!');
   }
 }
-
+var openInfo = false;
 async function PostAddressAccount() {
 
-	//передвижение карты
-	var ball = document.getElementById('map');
+// 	var myMobile = {
+// 			Android: function() {
+// 					return navigator.userAgent.match(/Android/i);
+// 			},
+// 			BlackBerry: function() {
+// 					return navigator.userAgent.match(/BlackBerry/i);
+// 			},
+// 			iOS: function() {
+// 					return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+// 			},
+// 			Opera: function() {
+// 					return navigator.userAgent.match(/Opera Mini/i);
+// 			},
+// 			Windows: function() {
+// 					return navigator.userAgent.match(/IEMobile/i);
+// 			},
+// 			any: function() {
+// 					return (myMobile.Android() ||
+// 									myMobile.BlackBerry() ||
+// 									myMobile.iOS() ||
+// 									myMobile.Opera() ||
+// 									myMobile.Windows());
+// 			}
+// 	};
+// 	if( myMobile.any() ) {
+// 		$.ajax({
+// 			url: '',
+// 			type: 'postm',
+// 			success: function (){
+// 				alert('success');
+// 			},
+// 	        error: function () {
+// 				alert('error');
+// 			}
+// 		});
+// 	} else {
+// 		console.log('PC');
+// 		$.ajax({
+// 			url: '',
+// 			type: 'postpc',
+// 			success: function (){
+// 				alert('success');
+// 			},
+// 	        error: function () {
+// 				alert('error');
+// 			}
+// 		});
+// 	}
+
+    var ball = document.getElementById('map');
     window.standardWidth = ball.getBoundingClientRect().width;
-    ball.ontouchstart = function(e) {
-      var coords = getCoords(ball);
-	  var shiftX = e.pageX - coords.left;
-	  var shiftY = e.pageY - coords.top;
 
+    // zoom(-1);
+    // zoom(-1);
 
-      console.log(coords.left, coords.top);
+    if (window.screen.width <= 500){
+        // document.getElementsByClassName('top_box')[0].style.display = 'none';
+        document.getElementsByClassName('left_box')[0].style.display = 'none';
+        document.getElementsByClassName('right_box')[0].style.display = 'none';
+        document.getElementsByClassName('bottom_box')[0].style.display = 'none';
+        document.getElementsByClassName('bottom_botoom')[0].style.display = 'none';
+        document.getElementsByClassName('top_top')[0].style.display = 'none';
+        // document.getElementsByClassName('plus')[0].style.display = 'block';
+        document.getElementById('connectBtnMob').style.display = 'block';
+        document.getElementById('connectBtnPC').style.display = 'none';
+        document.getElementById('info').style.display = 'none';
+        //document.getElementById('info').style.zIndex = '-1';
+        // document.getElementById('info').style.marginTop = '100vh';
 
-	  ball.style.position = 'absolute';
-
-	  moveAt(e);
-
-
-	  function moveAt(e) {
-	    var nftmap = document.getElementById('map');
-
-	      ball.style.left = e.pageX - shiftX + 'px';
-
-	      ball.style.top = e.pageY - shiftY + 'px';
-
-	  }
-
-	  document.ontouchmove = function(e) {
-	    moveAt(e);
-	  };
-
-	  ball.ontouchend = function() {
-	    document.ontouchmove = null;
-	    ball.ontouchend = null;
-	  };
+        //     document.getElementsByClassName('closeInfo').style.display = 'none';
+        // document.getElementsByClassName('img_of_nft').style.display = 'none';
+        // document.getElementsByClassName('h1of').style.display = 'none';
+        // document.getElementsByClassName('h2of').style.display = 'none';
+        // document.getElementsByClassName('option').style.display = 'none';
+        // document.getElementsByClassName('button_save').style.display = 'none';
+        // document.getElementsByClassName('discandtwiter').style.display = 'none';
     }
+
+    ball.ontouchstart = function(e) {
+          var coords = getCoords(ball);
+    	  var shiftX = e.pageX - coords.left;
+    	  var shiftY = e.pageY - coords.top;
+
+
+          console.log(coords.left, coords.top);
+
+    	  ball.style.position = 'absolute';
+
+    	  moveAt(e);
+
+
+    	  function moveAt(e) {
+    	    var nftmap = document.getElementById('map');
+
+    	      ball.style.left = e.pageX - shiftX + 'px';
+
+    	      ball.style.top = e.pageY - shiftY + 'px';
+
+    	  }
+
+    	  document.ontouchmove = function(e) {
+    	    moveAt(e);
+    	  };
+
+    	  ball.ontouchend = function() {
+    	    document.ontouchmove = null;
+    	    ball.ontouchend = null;
+    	  };
+        }
+
+	//передвижение карты
 
 	ball.onmousedown = function(e) {
 
@@ -695,6 +790,7 @@ async function PostAddressAccount() {
 	  return false;
 	};
 
+
 	function getCoords(elem) {   // кроме IE8-
 	  var box = elem.getBoundingClientRect();
 	  return {
@@ -718,11 +814,13 @@ async function PostAddressAccount() {
 function handleAccountsChanged(accounts) {
     if (accounts.length === 0) {
 				document.getElementById('result').innerHTML = 'connect wallet';
+				document.getElementById('connectBtnMob').style.boxShadow = '0 0 5px  #FF4500';
     } else {
 				document.getElementById('result').innerHTML = accounts[0].slice (0, 6)+'..'+accounts[0].slice (38, 42);
+				document.getElementById('connectBtnMob').style.boxShadow = 'none';
     }
 }
-
+var countZoom = 1;
 function AddPolygonNet(){
 	ethereum.request({
 	    method: 'wallet_addEthereumChain',
@@ -772,9 +870,10 @@ async function read(id) {
 			let account = accounts[0];
 			let formaA = document.getElementById('pen');
 			if (data.toLowerCase() == account) {
-				formaA.style.display = "inline";
+			    console.log('true');
+				formaA.style.display = "block";
 			} else {
-
+                console.log('false');
 				formaA.style.display = "none";
 			}
 
@@ -814,42 +913,81 @@ async function read(id) {
 			let formaV = document.getElementById('description');
 			formaV.style.visibility = "hidden";
 
-
-      document.getElementById('ownerOf').innerHTML = 'This land in sale, buy it!';
-      sel.style.visibility = "visible";
+        //   document.getElementById('ownerOf').innerHTML = 'This land in sale, buy it!';
+        //   sel.style.visibility = "hidden";
 
 			let formaA = document.getElementById('pen');
 			formaA.style.display = "none";
+
+			sorceImg = document.getElementById(id).src;
+            // console.log(sorceImg);
+			document.getElementById('idImg').src = sorceImg;
+
+            if (sorceImg == 'https://www.ndesk.io/media/images/green.png') {
+                document.getElementById('ownerOf').innerHTML = 'This land in sale, buy it!';
+                sel.style.visibility = "visible";
+            } else {
+                document.getElementById('ownerOf').innerHTML = 'This land is sold out!';
+                sel.style.visibility = "hidden";
+
+    			let formaV = document.getElementById('description');
+    			formaV.style.visibility = "visible";
+    			$.ajax({
+    				url: '',
+    				type: 'post',
+    				dataType: 'json',
+    				data: id,
+    				success: function (dataA){
+    					document.getElementById('description').innerHTML = dataA[0];
+    				},
+        		    error: function () {
+        					document.getElementById('description').innerHTML = '';
+        				}
+    			});
+            }
     });
 }
 
 var id_total;
 
 async function mint(id) {
-  getAccount();
+//   getAccount();
   var a = false;
+//   alert(a);
   const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
   let account = accounts[0];
   let myContract = new web3.eth.Contract(abi, myAddress);
   await myContract.methods.ownerOf(id).call()
     .then((data) => {
       console.log('This land is sold out');
+    //   alert(6);
     })
-    .catch(function (error) {
-
+    .catch(async function (error) {
+    // alert(7);
       a = true;
-    });
+    //   alert(8);
+          let eth_amount = await myContract.methods.cost().call();
+// alert(9);alert(account);alert(eth_amount);
 
-  if (a == true) {
-    let eth_amount = await myContract.methods.cost().call();
-
-    await myContract.methods.mint(account, 1, id).send({from:account, value:eth_amount});
+    let transa = await myContract.methods.mint(account, 1, id).send({from:account, value:eth_amount});
+    // alert(10);
     document.getElementById('ownerOf').innerHTML = account;
     let sel = document.getElementById('#Id');
     sel.style.visibility = "hidden";
-  } else {
-    console.log('This land is sold out');
-  }
+    });
+    // alert('11' + a);
+//   if (a == true) {
+//     let eth_amount = await myContract.methods.cost().call();
+
+//     await myContract.methods.mint(account, 1, id).send({from:account, value:eth_amount});
+//     document.getElementById('ownerOf').innerHTML = account;
+//     let sel = document.getElementById('#Id');
+//     sel.style.visibility = "hidden";
+//     alert(8);
+//   } else {
+//     console.log('This land is sold out');
+//     alert(9);
+//   }
 }
 
 
@@ -873,49 +1011,117 @@ function click(e) {
     elem = elem.childNodes[1];
   }
   if (elem.className == 'nft_img'){
-    console.log(elem.className);
-	console.log(elem);
+//     console.log(elem.className);
+// 	console.log(elem);
+    if (openInfo == false && window.screen.width <= 500){
+        document.getElementById('info').style.display = 'inline';
+        document.getElementsByClassName('plus')[0].style.display = 'none';
+        document.getElementById('map').style.display = 'none';
+	   // document.getElementById('info').style.zIndex = '111';
+	   //document.getElementById('info').style.marginTop = '50vh';
+	   //document.getElementsByClassName('closeInfo').style.display = 'block';
+    //     document.getElementsByClassName('img_of_nft').style.display = 'block';
+    //     document.getElementsByClassName('h1of').style.display = 'block';
+    //     document.getElementsByClassName('h2of').style.display = 'block';
+    //     document.getElementsByClassName('option').style.display = 'block';
+    //     document.getElementsByClassName('button_save').style.display = 'block';
+    //     document.getElementsByClassName('discandtwiter').style.display = 'block';
+	    openInfo = true;
+	}
+
+//     if (window.screen.width <= 500 && countZoom == 1){
+//     	var nftmap = document.getElementById('map');
+//         var centerHei = e.pageY;
+//         var centerWin = e.pageX;
+//         var nftmapClient = nftmap.getBoundingClientRect();
+//         var cordMouseOnBlockX = centerWin - nftmapClient.left;
+//         var cordMouseOnBlockY = centerHei - nftmapClient.top;
+//         var percentegeCMOBX = cordMouseOnBlockX/nftmapClient.width;
+//         var percentegeCMOBY = cordMouseOnBlockY/nftmapClient.height;
+//           countZoom = 6;
+
+//           nftmap.style.width = standardWidth * countZoom * countZoom + 'px';
+//           nftmap.style.height = 2 * standardWidth * countZoom * countZoom + 'px';
+
+//           var perNewX = percentegeCMOBX * document.getElementById('map').getBoundingClientRect().width;
+//           var perNewY = percentegeCMOBY * document.getElementById('map').getBoundingClientRect().height;
+//           var itogoX = -(perNewX - centerWin);
+//           var itogoY = -(perNewY - centerHei);
+//           nftmap.style.left = itogoX +'px';
+//           nftmap.style.top = itogoY +'px';
+//     }
 	read(elem.id);
 	let sel = document.getElementById('#Id');
 	sel.setAttribute('onclick','mint(' + elem.id + ')');
   }
 }
-
+var clck = true;
 var firstHeight = 0;
 
 var plmn = true;
 function zoom(delta){
   var nftmap = document.getElementById('map');
-
-  var nftmapClient = nftmap.getBoundingClientRect();
-    var cordMouseOnBlockX = window.screen.width/2 - nftmapClient.left;
-    var cordMouseOnBlockY = window.screen.height/2 - nftmapClient.top;
+  var centerHei = window.screen.height/2;
+    if (window.screen.width <= 500){
+        var centerWin = window.screen.width/2;
+    }
+    else{
+       var centerWin = window.screen.width*0.625;
+    }
+    var nftmapClient = nftmap.getBoundingClientRect();
+    if (!(document.elementFromPoint(centerWin, centerHei).className == 'nft' || document.elementFromPoint(centerWin, centerHei).className == 'nft_img')){
+        centerWin = nftmapClient.width/2 + nftmapClient.left;
+        centerHei = nftmapClient.height/2 + nftmapClient.top;
+    }
+    var cordMouseOnBlockX = centerWin - nftmapClient.left;
+    var cordMouseOnBlockY = centerHei - nftmapClient.top;
     var percentegeCMOBX = cordMouseOnBlockX/nftmapClient.width;
     var percentegeCMOBY = cordMouseOnBlockY/nftmapClient.height;
-
     if (countZoom > 1 && countZoom < 9 && delta > 0){
-      countZoom --;
+      if(countZoom == 2){
+        countZoom = 1.4;
+      }
+      else if(countZoom == 1.4){
+          countZoom = 1.2;
+      }
+      else if(countZoom == 1.2){
+          countZoom = 1;
+      }
+      else{
+        countZoom --;
+      }
 
       nftmap.style.width = standardWidth * countZoom * countZoom + 'px';
       nftmap.style.height = 2 * standardWidth * countZoom * countZoom + 'px';
 
       var perNewX = percentegeCMOBX * document.getElementById('map').getBoundingClientRect().width;
       var perNewY = percentegeCMOBY * document.getElementById('map').getBoundingClientRect().height;
-      var itogoX = -(perNewX - window.screen.width/2);
-      var itogoY = -(perNewY - window.screen.height/2);
+      var itogoX = -(perNewX - centerWin);
+      var itogoY = -(perNewY - centerHei);
       nftmap.style.left = itogoX +'px';
       nftmap.style.top = itogoY +'px';
     }
     else if (countZoom > 0 && countZoom < 8 && delta < 0){
-      countZoom ++;
+      if(countZoom == 1){
+        countZoom = 1.2;
+      }
+      else if(countZoom == 1.2){
+          countZoom = 1.4;
+      }
+      else if(countZoom == 1.4){
+          countZoom = 2;
+      }
+      else{
+        countZoom++;
+      }
 
       nftmap.style.width = standardWidth * countZoom * countZoom + 'px';
       nftmap.style.height = 2 * standardWidth * countZoom * countZoom + 'px';
 
       var perNewX = percentegeCMOBX * document.getElementById('map').getBoundingClientRect().width;
       var perNewY = percentegeCMOBY * document.getElementById('map').getBoundingClientRect().height;
-      var itogoX = -(perNewX - window.screen.width/2);
-      var itogoY = -(perNewY - window.screen.height/2);
+      var itogoX = -(perNewX - centerWin);
+      var itogoY = -(perNewY - centerHei);
       nftmap.style.left = itogoX +'px';
       nftmap.style.top = itogoY +'px';
     }
@@ -943,7 +1149,7 @@ function zoom(delta){
 
 //   }, 20);
 }
-var countZoom = 1;
+
 var standardWidth;
 window.addEventListener("wheel", onWheel);
 function onWheel(e) {
@@ -960,7 +1166,18 @@ function onWheel(e) {
     var percentegeCMOBY = cordMouseOnBlockY/nftmapClient.height;
 
     if (countZoom > 1 && countZoom < 9 && delta > 0){
-      countZoom --;
+      if(countZoom == 2){
+        countZoom = 1.4;
+      }
+      else if(countZoom == 1.4){
+          countZoom = 1.2;
+      }
+      else if(countZoom == 1.2){
+          countZoom = 1;
+      }
+      else{
+        countZoom --;
+      }
 
       nftmap.style.width = standardWidth * countZoom * countZoom + 'px';
       nftmap.style.height = 2 * standardWidth * countZoom * countZoom + 'px';
@@ -973,7 +1190,18 @@ function onWheel(e) {
       nftmap.style.top = itogoY +'px';
     }
     else if (countZoom > 0 && countZoom < 8 && delta < 0){
-      countZoom ++;
+      if(countZoom == 1){
+        countZoom = 1.2;
+      }
+      else if(countZoom == 1.2){
+          countZoom = 1.4;
+      }
+      else if(countZoom == 1.4){
+          countZoom = 2;
+      }
+      else{
+        countZoom++;
+      }
 
       nftmap.style.width = standardWidth * countZoom * countZoom + 'px';
       nftmap.style.height = 2 * standardWidth * countZoom * countZoom + 'px';
@@ -994,4 +1222,19 @@ function minimap(){
   var minimap = nftmap.cloneNode(true);
   minimap.id = "minimap";
   body.appendChild(minimap);
+}
+
+function closeInfo(){
+    openInfo = false;
+    document.getElementById('info').style.display = 'none';
+    document.getElementsByClassName('plus')[0].style.display = 'block';
+    document.getElementById('map').style.display = 'block';
+    // document.getElementById('info').style.marginTop = '100vh';\
+    // document.getElementsByClassName('closeInfo').style.display = 'none';
+    //     document.getElementsByClassName('img_of_nft').style.display = 'none';
+    //     document.getElementsByClassName('h1of').style.display = 'none';
+    //     document.getElementsByClassName('h2of').style.display = 'none';
+    //     document.getElementsByClassName('option').style.display = 'none';
+    //     document.getElementsByClassName('button_save').style.display = 'none';
+    //     document.getElementsByClassName('discandtwiter').style.display = 'none';
 }
