@@ -43,13 +43,6 @@ def index(request):
             dataGet = round(start_datetime.timestamp() - current_datetime.timestamp())
             return JsonResponse(dataGet, safe = False)
 
-        # if request.method == 'POSTM':
-        #     version = 1
-
-        # if request.method == 'POSTPC':
-        #     version = 0
-
-
     if request.method == 'POST':
         form = ImagesForm(request.POST, request.FILES)
         id_json = int(form.data["id_nft"])
@@ -60,14 +53,9 @@ def index(request):
 
 
     if dataGet <= 0:
-        # if version == 1:
-        #     return render(request, 'aptos/indexm.html')
-        # if version == 0:
         return render(request, 'aptos/index.html', data)
     else:
         return render(request, 'aptos/preloader.html')
-
-
 
 
 
