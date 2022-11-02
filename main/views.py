@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 from datetime import datetime, date, time
 import datetime as dt
 import time
+from django.shortcuts import redirect
 
 @csrf_exempt
 def index(request):
@@ -24,15 +25,11 @@ def index(request):
         'images': images,
     }
 
-    start_datetime = dt.datetime(2022, 6, 25, 23, 25, 0, 0)
+    start_datetime = dt.datetime(2022, 9, 9, 19, 00, 0, 0)
     current_datetime = datetime.now()
-    if start_datetime > current_datetime:
-        dataGet = start_datetime - current_datetime
-        dataGet = dataGet.seconds
-    elif start_datetime < current_datetime:
-        dataGet = -1
-    elif 0 > (start_datetime - current_datetime) < 1:
-        dataGet = 0
+    dataGet = round(start_datetime.timestamp() - current_datetime.timestamp())
+
+    # version = 0
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         if request.method == 'POST':
@@ -43,7 +40,14 @@ def index(request):
             return JsonResponse(dat, safe = False)
 
         if request.method == 'GET-TIME':
+            dataGet = round(start_datetime.timestamp() - current_datetime.timestamp())
             return JsonResponse(dataGet, safe = False)
+
+        # if request.method == 'POSTM':
+        #     version = 1
+
+        # if request.method == 'POSTPC':
+        #     version = 0
 
 
     if request.method == 'POST':
@@ -56,6 +60,9 @@ def index(request):
 
 
     if dataGet <= 0:
+        # if version == 1:
+        #     return render(request, 'main/indexm.html')
+        # if version == 0:
         return render(request, 'main/index.html', data)
     else:
         return render(request, 'main/preloader.html')

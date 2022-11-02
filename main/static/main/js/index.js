@@ -557,23 +557,29 @@ let abi = [
 	}
 ];
 
-let myAddress = '0x65581cB189A48f76521F91B9B99cfCA4A45AFEaD';
+let myAddress = '0x95Ce19Ab4AF262711D4Af1974f1E03045e3d5527';
 
-const WEB3_PROVIDER = "http://127.0.0.1:7545";
+const WEB3_PROVIDER = "https://mainnet.infura.io/v3/";
 var web3;
 
 async function web3providerMetamask(){
 	if (typeof window.ethereum !== 'undefined') {
     web3 = new Web3(web3.currentProvider);
 	  console.log('MetaMask is installed!');
-		// getAccount();
 		ethereum
 		.request({ method: 'eth_accounts' })
 		.then(handleAccountsChanged)
 		.catch(console.error);
 	} else {
-      web3 = new Web3(new Web3.providers.HttpProvider(WEB3_PROVIDER));
-			console.log('Please install MetaMask!');
+//       web3 = new Web3(new Web3.providers.HttpProvider(WEB3_PROVIDER));
+// 			console.log('Please install MetaMask!');
+      window.addEventListener('ethereum#initialized', handleEthereum, {
+        once: true,
+      });
+
+      // If the event is not dispatched by the end of the timeout,
+      // the user probably doesn't have MetaMask installed.
+      setTimeout(handleEthereum, 3000); // 3 seconds
 	}
 }
 
@@ -581,7 +587,6 @@ async function getAccount() {
   if (typeof window.ethereum !== 'undefined') {
     web3 = new Web3(web3.currentProvider);
 	  console.log('MetaMask is installed!');
-		// getAccount();
     ToPolygonNet();
   	ethereum
   			.request({ method: 'eth_requestAccounts'})
@@ -594,9 +599,14 @@ async function getAccount() {
   					}
   			});
 	} else {
-      web3 = new Web3(new Web3.providers.HttpProvider(WEB3_PROVIDER));
-			console.log('Please install MetaMask!');
-      alert('Please install MetaMask!');
+      window.addEventListener('ethereum#initialized', handleEthereum, {
+        once: true,
+      });
+      console.log('fu3hcmuth4mmudifxhdi');
+
+      // If the event is not dispatched by the end of the timeout,
+      // the user probably doesn't have MetaMask installed.
+      setTimeout(handleEthereum, 3000); // 3 seconds
 	}
 }
 
@@ -614,12 +624,47 @@ async function PostAddressAccount() {
 
 	//передвижение карты
 	var ball = document.getElementById('map');
+    window.standardWidth = ball.getBoundingClientRect().width;
+    ball.ontouchstart = function(e) {
+      var coords = getCoords(ball);
+	  var shiftX = e.pageX - coords.left;
+	  var shiftY = e.pageY - coords.top;
+
+
+      console.log(coords.left, coords.top);
+
+	  ball.style.position = 'absolute';
+
+	  moveAt(e);
+
+
+	  function moveAt(e) {
+	    var nftmap = document.getElementById('map');
+
+	      ball.style.left = e.pageX - shiftX + 'px';
+
+	      ball.style.top = e.pageY - shiftY + 'px';
+
+	  }
+
+	  document.ontouchmove = function(e) {
+	    moveAt(e);
+	  };
+
+	  ball.ontouchend = function() {
+	    document.ontouchmove = null;
+	    ball.ontouchend = null;
+	  };
+    }
 
 	ball.onmousedown = function(e) {
 
 	  var coords = getCoords(ball);
 	  var shiftX = e.pageX - coords.left;
 	  var shiftY = e.pageY - coords.top;
+
+
+      console.log(coords.left, coords.top);
 
 	  ball.style.position = 'absolute';
 
@@ -665,14 +710,14 @@ async function PostAddressAccount() {
 
 	window.firstHeight = nftmap.offsetHeight;
 
-	document.getElementById('result').innerHTML = 'CONNECT';
+	document.getElementById('result').innerHTML = 'connect wallet';
   web3providerMetamask();
 
 }
 
 function handleAccountsChanged(accounts) {
     if (accounts.length === 0) {
-				document.getElementById('result').innerHTML = 'CONNECT';
+				document.getElementById('result').innerHTML = 'connect wallet';
     } else {
 				document.getElementById('result').innerHTML = accounts[0].slice (0, 6)+'..'+accounts[0].slice (38, 42);
     }
@@ -682,15 +727,15 @@ function AddPolygonNet(){
 	ethereum.request({
 	    method: 'wallet_addEthereumChain',
 	    params: [{
-	        chainId: web3.utils.toHex('43114'),
-	        chainName: 'Avalanche Network',
+	        chainId: web3.utils.toHex('1'),
+	        chainName: 'Ethereum mainnet',
 	        nativeCurrency: {
-	            name: 'AVAX',
-	            symbol: 'AVAX',
+	            name: 'ETH',
+	            symbol: 'ETH',
 	            decimals: 18
 	        },
-	        rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
-	        blockExplorerUrls: ['https://snowtrace.io']
+	        rpcUrls: ['https://mainnet.infura.io/v3/'],
+	        blockExplorerUrls: ['https://etherscan.io']
 	    }],
 	})
 	.then(() => console.log('network added'))
@@ -698,7 +743,7 @@ function AddPolygonNet(){
 }
 
 function ToPolygonNet(){
-	var chainIdHex = web3.utils.toHex('1337');
+	var chainIdHex = web3.utils.toHex('1');
 	console.log(chainIdHex);
 	ethereum.request({
 	    method: 'wallet_switchEthereumChain',
@@ -725,7 +770,7 @@ async function read(id) {
 
 			const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
 			let account = accounts[0];
-			let formaA = document.getElementById('forma');
+			let formaA = document.getElementById('pen');
 			if (data.toLowerCase() == account) {
 				formaA.style.display = "inline";
 			} else {
@@ -773,7 +818,7 @@ async function read(id) {
       document.getElementById('ownerOf').innerHTML = 'This land in sale, buy it!';
       sel.style.visibility = "visible";
 
-			let formaA = document.getElementById('forma');
+			let formaA = document.getElementById('pen');
 			formaA.style.display = "none";
     });
 }
@@ -824,67 +869,123 @@ function bdwrite() {
 window.addEventListener("click", click);
 function click(e) {
   let elem = document.elementFromPoint(e.pageX, e.pageY);
-  console.log(elem.id);
-	// console.log(elem);
+  if (elem.className == 'nft'){
+    elem = elem.childNodes[1];
+  }
+  if (elem.className == 'nft_img'){
+    console.log(elem.className);
+	console.log(elem);
 	read(elem.id);
 	let sel = document.getElementById('#Id');
 	sel.setAttribute('onclick','mint(' + elem.id + ')');
+  }
 }
 
 var firstHeight = 0;
 
 var plmn = true;
-function zoom(plmn){
+function zoom(delta){
   var nftmap = document.getElementById('map');
 
+  var nftmapClient = nftmap.getBoundingClientRect();
+    var cordMouseOnBlockX = window.screen.width/2 - nftmapClient.left;
+    var cordMouseOnBlockY = window.screen.height/2 - nftmapClient.top;
+    var percentegeCMOBX = cordMouseOnBlockX/nftmapClient.width;
+    var percentegeCMOBY = cordMouseOnBlockY/nftmapClient.height;
 
-  let start = Date.now(); // запомнить время начала
+    if (countZoom > 1 && countZoom < 9 && delta > 0){
+      countZoom --;
 
-  let timer = setInterval(function() {
-    // сколько времени прошло с начала анимации?
-    let timePassed = Date.now() - start;
+      nftmap.style.width = standardWidth * countZoom * countZoom + 'px';
+      nftmap.style.height = 2 * standardWidth * countZoom * countZoom + 'px';
 
-    if (timePassed >= 200) {
-      clearInterval(timer); // закончить анимацию через 2 секунды
-      return;
+      var perNewX = percentegeCMOBX * document.getElementById('map').getBoundingClientRect().width;
+      var perNewY = percentegeCMOBY * document.getElementById('map').getBoundingClientRect().height;
+      var itogoX = -(perNewX - window.screen.width/2);
+      var itogoY = -(perNewY - window.screen.height/2);
+      nftmap.style.left = itogoX +'px';
+      nftmap.style.top = itogoY +'px';
+    }
+    else if (countZoom > 0 && countZoom < 8 && delta < 0){
+      countZoom ++;
+
+      nftmap.style.width = standardWidth * countZoom * countZoom + 'px';
+      nftmap.style.height = 2 * standardWidth * countZoom * countZoom + 'px';
+
+      var perNewX = percentegeCMOBX * document.getElementById('map').getBoundingClientRect().width;
+      var perNewY = percentegeCMOBY * document.getElementById('map').getBoundingClientRect().height;
+      var itogoX = -(perNewX - window.screen.width/2);
+      var itogoY = -(perNewY - window.screen.height/2);
+      nftmap.style.left = itogoX +'px';
+      nftmap.style.top = itogoY +'px';
     }
 
-    if (plmn && 5*window.innerWidth <= nftmap.offsetWidth + timePassed/10 && nftmap.offsetWidth + timePassed/10 <= 100*window.innerWidth){
-      nftmap.style.width = nftmap.offsetWidth + timePassed/10 + 'px';
-      nftmap.style.height = nftmap.offsetHeight + timePassed/10 + 'px';
-    }
-    else if (!plmn && 5*window.innerWidth <= nftmap.offsetWidth - timePassed/10 && nftmap.offsetWidth - timePassed/10 <= 100*window.innerWidth){
-      nftmap.style.width = nftmap.offsetWidth - timePassed/10 + 'px';
-      nftmap.style.height = nftmap.offsetHeight - timePassed/10 + 'px';
-    }
+//   let start = Date.now(); // запомнить время начала
+
+//   let timer = setInterval(function() {
+//     // сколько времени прошло с начала анимации?
+//     let timePassed = Date.now() - start;
+
+//     if (timePassed >= 200) {
+//       clearInterval(timer); // закончить анимацию через 2 секунды
+//       return;
+//     }
+
+//     if (plmn && 5*window.innerWidth <= nftmap.offsetWidth + timePassed/10 && nftmap.offsetWidth + timePassed/10 <= 100*window.innerWidth){
+//       nftmap.style.width = nftmap.offsetWidth + timePassed/10 + 'px';
+//       nftmap.style.height = nftmap.offsetHeight + timePassed/10 + 'px';
+//     }
+//     else if (!plmn && 5*window.innerWidth <= nftmap.offsetWidth - timePassed/10 && nftmap.offsetWidth - timePassed/10 <= 100*window.innerWidth){
+//       nftmap.style.width = nftmap.offsetWidth - timePassed/10 + 'px';
+//       nftmap.style.height = nftmap.offsetHeight - timePassed/10 + 'px';
+//     }
 
 
-  }, 20);
+//   }, 20);
 }
-
+var countZoom = 1;
+var standardWidth;
 window.addEventListener("wheel", onWheel);
 function onWheel(e) {
-  var nftmap = document.getElementById('map');
-  e = e || window.event;
+  console.log(document.elementFromPoint(e.pageX, e.pageY));
+  if (document.elementFromPoint(e.pageX, e.pageY).className == 'nft' || document.elementFromPoint(e.pageX, e.pageY).className == 'map' || document.elementFromPoint(e.pageX, e.pageY).className == 'nft_img'){
+    var nftmap = document.getElementById('map');
+    e = e || window.event;
+    var delta = e.deltaY || e.detail || e.wheelDelta;
 
-  // wheelDelta не даёт возможность узнать количество пикселей
-  var delta = e.deltaY || e.detail || e.wheelDelta;
+    var nftmapClient = nftmap.getBoundingClientRect();
+    var cordMouseOnBlockX = e.pageX - nftmapClient.left;
+    var cordMouseOnBlockY = e.pageY - nftmapClient.top;
+    var percentegeCMOBX = cordMouseOnBlockX/nftmapClient.width;
+    var percentegeCMOBY = cordMouseOnBlockY/nftmapClient.height;
 
-  var info = document.getElementById('delta');
+    if (countZoom > 1 && countZoom < 9 && delta > 0){
+      countZoom --;
 
-	delta = 3 * delta;
-  if (0.7 * window.innerWidth <= nftmap.offsetWidth - delta && nftmap.offsetWidth - delta <= 15*window.innerWidth){
-    nftmap.style.width = nftmap.offsetWidth - delta + 'px';
-    nftmap.style.height = nftmap.offsetHeight - delta * 2 + 'px';
-    var scalechange = (nftmap.offsetHeight / window.firstHeight) - 1;
-    offsetX = -(e.pageX * scalechange);
-    offsetY = -(e.pageY * scalechange);
-    nftmap.style.left = offsetX + 'px';
-    nftmap.style.top = offsetY + 'px';
-    console.log(scalechange);
+      nftmap.style.width = standardWidth * countZoom * countZoom + 'px';
+      nftmap.style.height = 2 * standardWidth * countZoom * countZoom + 'px';
+
+      var perNewX = percentegeCMOBX * document.getElementById('map').getBoundingClientRect().width;
+      var perNewY = percentegeCMOBY * document.getElementById('map').getBoundingClientRect().height;
+      var itogoX = -(perNewX - e.pageX);
+      var itogoY = -(perNewY - e.pageY);
+      nftmap.style.left = itogoX +'px';
+      nftmap.style.top = itogoY +'px';
+    }
+    else if (countZoom > 0 && countZoom < 8 && delta < 0){
+      countZoom ++;
+
+      nftmap.style.width = standardWidth * countZoom * countZoom + 'px';
+      nftmap.style.height = 2 * standardWidth * countZoom * countZoom + 'px';
+
+      var perNewX = percentegeCMOBX * document.getElementById('map').getBoundingClientRect().width;
+      var perNewY = percentegeCMOBY * document.getElementById('map').getBoundingClientRect().height;
+      var itogoX = -(perNewX - e.pageX);
+      var itogoY = -(perNewY - e.pageY);
+      nftmap.style.left = itogoX +'px';
+      nftmap.style.top = itogoY +'px';
+    }
   }
-
-
 }
 
 function minimap(){

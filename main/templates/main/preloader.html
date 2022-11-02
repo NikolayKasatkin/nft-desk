@@ -5,39 +5,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NFT desk</title>
+    <title>nft desk</title>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="{% static 'main/js/timer.js' %}"></script>
+    <link rel="icon" href="{% static 'main/images/green.png' %}" type="image/x-icon">
 </head>
 <body>
     <div class="nft-dek">
         <div class="container">
             <div class="nft_dek">
-                <h1>nft desk</h1>
-                <p><span style="font-size: 12px;">▪</span>coming<span style="font-size: 12px;">▪</span>soon<span style="font-size: 12px;">▪</span></p>
-                <p><span style="font-size: 12px;">▪</span>in<span style="font-size: 12px;">▪</span></p>
-                <p id="timer"></p>
+                <h1 style='font-weight: 900;font-size: 99px;'>nft desk</h1>
+                <p style='font-weight: 700;font-size: 25px;'>.web3.online.desk.</p><br>
+                <p style='font-weight: 700;font-size: 25px;'>.minting.starts.in:<span style="font-size: 12px;"></p>
+                <p style='font-weight: 900;font-size: 35px;' id="timer"></p>
             </div>
             <div class="discandtwiter">
                 <div class="discandtwiter__row">
                     <div class="discord">
-                       <a target="_blank" href="https://discord.com/invite/CMmmpnE9cj"> <img height="100px" src="{% static 'main/images/discord-alt-svgrepo-com.svg' %}"></a>
+                       <a target="_blank" href="https://discord.gg/FU3ePxAZaR"> <img height="100px" src="{% static 'main/images/discord-alt-svgrepo-com.svg' %}"></a>
                     </div>
                     <div class="twitter" style="display: flex; justify-content: center; align-items: center;">
-                       <a target="_blank" href="https://twitter.com/nftdesk_io"><img style="margin-bottom: 1px;" height="70px"  src="{% static 'main/images/twitter-svgrepo-com.svg' %}"></a>
+                       <a target="_blank" href="https://twitter.com/ndesk_io"><img style="margin-bottom: 1px;" height="70px"  src="{% static 'main/images/twitter-svgrepo-com.svg' %}"></a>
                     </div>
                     <div class="join">
-                        <p><span style="font-size: 12px;">▪</span>join<span style="font-size: 12px;">▪</span>community<span style="font-size: 12px;">▪</span></p>
+                        <p>.join.community.</p>
                     </div>
                 </div>
             </div>
         </div>
-
-
-
     </div>
-
-
+    <div style="visibility: hidden;">
+        <a href="https://raritysniper.com/nft-drops-calendar">NFT Drops</a>
+    </div>
+    <div style="visibility: hidden;">
+        <a href="https://icy.tools/calendar" target="_blank"> <img src="https://cdn.icy.tools/images/icy-tools-light.svg" alt="as seen on icy.tools" width="256" /></a>
+    </div>
+    <div style="visibility: hidden;">
+        <a href="https://icy.tools/calendar" target="_blank"> <img src="https://cdn.icy.tools/images/icy-tools-dark.svg" alt="as seen on icy.tools' NFT Calendar" width="256" /></a>
+    </div>
     <style>
 
         @font-face {
@@ -61,8 +66,11 @@
             align-items: center;
 
         }
+        .discandtwiter__row div{
+            margin-right: 10px;
+        }
         .discandtwiter{
-            margin-top: 120px;
+            margin-top: 10px;
             display: flex;
             align-items: center;
             width: 100%;
@@ -99,7 +107,7 @@
             width: 100%;
         }
         .join p{
-            font-size: 18px;
+            /*font-size: 18px;*/
             text-align: center;
             margin-block-end: 0em;
             margin-inline-start: 0px;
@@ -107,6 +115,8 @@
             font-family: "Inter Bold";
             position: relative;
             bottom: 20px;
+            font-weight: 700;
+            font-size: 25px;
         }
     </style>
 </body>
