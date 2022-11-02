@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<meta name="viewport" content="width=device-width, user-scalable=no" />-->
+    <title>nft desk</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
+
+    <link rel="icon" href="{% static 'main/images/green.png' %}" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
+
+    <script async type="text/javascript" src="{% static 'main/js/index.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'main/css/index.css' %}">
+
+    <!--<meta name="description" content="Nft desk. Web3 online NFT bulletin board. 20,000 ad spaces.">-->
+    <!--    <meta data-n-head="ssr" data-hid="og:title" name="og:title" content="Nft desk.">-->
+    <!--<meta data-n-head="ssr" data-hid="og:description" name="og:description" content="Web3 online NFT bulletin board. 20,000 ad spaces.">-->
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@ndesk_io" />
+    <meta name="twitter:title" content="Nft desk." />
+    <meta name="twitter:description" content="Web3 online NFT bulletin board. 20,000 ad spaces." />
+    <meta name="twitter:image" content="https://www.ndesk.io/static/main/images/green.png" />
+
+    <meta property="og:type" content="profile"/>
+    <meta property="og:title" content="Nft desk."/>
+    <meta property="og:description" content="Web3 online NFT bulletin board. 20,000 ad spaces."/>
+    <meta property="og:image" content="https://www.ndesk.io/static/main/images/green.png"/>
+    <meta property="og:url" content="https://www.ndesk.io/"/>
+    <meta property="og:site_name" content="Nft desk."/>
+
+    <meta itemprop="og:name" content="Nft desk.">
+    <meta itemprop="og:description" content="Web3 online NFT bulletin board. 20,000 ad spaces.">
+    <meta itemprop="og:image" content="https://www.ndesk.io/static/main/images/green.png">
+
+  </head>
+  <body onload="PostAddressAccount()" id="body">
+
+    <h1 style="display:none;">Nft desk. Web3 online NFT bulletin board. 20,000 ad spaces.</h1>
+    <nav class="menu">
+    <div class="addpaymant">
+        <div>
+            <!--<img src="{% static 'main/images/Icon/add.png' %}" alt="">-->
+            <buttom id='connectBtnPC' style='display:block;' onclick="getAccount()"><div id="result"></div></buttom>
+            <buttom id='connectBtnMob' style='display:none;' onclick="getAccount()"><img src="{% static 'main/images/premium-icon-wallet-3757939.png' %}" alt=""></buttom>
+        </div>
+    </div>
+    <div class="logo">
+        <h1>nft desk</h1>
+    </div>
+    </nav>
+
+
+      <div class="information" id="info">
+          <button class='closeInfo' onclick='setTimeout(closeInfo, 500);'>x</button>
+          <div class="img_of_nft">
+              <img id="idImg" alt="" src="/media/images/green.png">
+          </div>
+          <div class="h1of">
+              <div class="information_owner" id="ownerOf">Owner</div>
+          </div>
+          <div class="h2of">
+              <div class="h2of_idnft" style="font-size: 24px;" id="idnft">Land №</div>
+              <div class="pen" id='pen' style='display:none;' onclick="if (window.screen.width <= 500){document.getElementsByClassName('plus')[0].style.display = 'none';}document.getElementById('forma').style.display = 'inline';document.getElementById('info').style.display = 'none'; document.getElementById('buy_info').style.display = 'inline';">
+
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
+                      </svg>
+
+              </div>
+          </div>
+
+          <div class="option">
+              <div class="option_description" id="description" >Description</div>
+          </div>
+
+          <div class="button_save">
+              <button type="button" name="button" class=""  id='#Id'>BUY</button>
+          </div>
+
+
+          <!--<div class="paymentclass">-->
+
+          <!--    <div class="crypto_coin">-->
+          <!--        <img class="cr" src="{% static 'main/images/crypto.png' %}" alt="">-->
+
+          <!--        <div class="crytpo_wallet">-->
+          <!--            <img src="{% static 'main/images/metamask.png' %}" alt="">-->
+          <!--        </div>-->
+          <!--    </div>-->
+          <!--    <div class="Name_of">-->
+          <!--        <p>Metamask Etherium</p>-->
+          <!--    </div>-->
+          <!--</div>-->
+
+         <div class="discandtwiter">
+            <div class="discandtwiter__row">
+                <div class="discord">
+                   <a target="_blank" href="https://discord.gg/FU3ePxAZaR"> <img height="100px" src="{% static 'main/images/discord-alt-svgrepo-com.svg' %}"></a>
+                </div>
+                <div class="twitter" style="display: inline-block; justify-content: center; align-items: center;">
+                   <a target="_blank" href="https://twitter.com/ndesk_io"><img style="margin-bottom: 1px;" height="70px"  src="{% static 'main/images/twitter-svgrepo-com.svg' %}"></a>
+                </div>
+                <div class="opensea">
+                   <a target="_blank" href="https://opensea.io/collection/nftdesk"> <img height="100px" src="{% static 'main/images/cbc0504995e1d015ff6fdc4e6a9afbdf.svg' %}"></a>
+                </div>
+            </div>
+          </div>
+      </div>
+
+      <!--
+     БЛОК ДЛЯ редактирования картинки и описания
+  -->
+      <div class="buy_info" id='buy_info' style='display:none;'>
+          <div class="close" id='close' onclick="document.getElementById('forma').style.display = 'none';document.getElementById('info').style.display = 'inline'; document.getElementById('buy_info').style.display = 'none';">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                   <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                </svg>
+          </div>
+          <div class="form">
+
+              <form id="forma" method="post" enctype="multipart/form-data" style="display: none">
+                <div class="uplod_div">
+                    <img class="upload" src="{% static 'main/images/upload.png' %}">
+                    <h1>UPLOAD PHOTO</h1>
+                </div>
+                {% csrf_token %}
+                {{ form.image }}<br><br><br>
+                <label>Description</label><br>
+                {{ form.description }}<br>
+                {{ form.id_nft }}<br>
+                <span>{{ error }}</span>
+
+                <div class="special_name" id="idnft2"></div>
+
+                <div class="button_save">
+                    <button type="submit" >SAVE</button>
+                </div>
+
+              </form>
+
+          </div>
+
+          <div class="discandtwiter">
+            <div class="discandtwiter__row">
+                <div class="discord">
+                   <a target="_blank" href="https://discord.gg/FU3ePxAZaR"> <img height="100px" src="{% static 'main/images/discord-alt-svgrepo-com.svg' %}"></a>
+                </div>
+                <div class="twitter" style="display: inline-block; justify-content: center; align-items: center;">
+                   <a target="_blank" href="https://twitter.com/ndesk_io"><img style="margin-bottom: 1px;" height="70px"  src="{% static 'main/images/twitter-svgrepo-com.svg' %}"></a>
+                </div>
+                <div class="opensea">
+                   <a target="_blank" href="#"> <img height="100px" src="{% static 'main/images/cbc0504995e1d015ff6fdc4e6a9afbdf.svg' %}"></a>
+                </div>
+            </div>
+          </div>
+
+      </div>
+
+
+      <div class="top_box"></div>
+      <div class="left_box"></div>
+      <div class="right_box"></div>
+      <div class="bottom_box"></div>
+      <div class="bottom_botoom"></div>
+      <div class="top_top"></div>
+    <div class="plus">
+      <button onclick='zoom(-1)' class='plusBtn'>+</button>
+      <button onclick='zoom(1)'>-</button>
+    </div>
+      <!-- Заполнить БД -->
+      <!-- <button type="button" name="button" onclick="bdwrite()">write</button> -->
+
+      <div id="map" class="map">
+        {% for i in images %}
+          <div class="nft">
+            <img id="{{i.id_nft}}" class="nft_img" src="{{i.image.url}}" alt="">
+          </div>
+        {% endfor %}
+      </div>
+
+
+  </body>
+</html>

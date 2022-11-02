@@ -905,6 +905,7 @@ async function read(id) {
 
     })
     .catch(function (error) {
+
 			document.getElementById('idnft').innerHTML = 'Land № ' + id;
 			document.getElementById('idnft2').innerHTML = 'Land № ' + id;
 
