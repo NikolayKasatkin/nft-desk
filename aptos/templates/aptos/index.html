@@ -44,13 +44,31 @@
   </head>
   <body onload="PostAddressAccount()" id="body">
 
+    <div class="lightbox" id="wallet">
+      <figure>
+        <a href="#" class="close"></a>
+
+        <figcaption>
+        <div class="wallet" onclick="getAccountPetra()">
+          <img src="{% static 'aptos/images/petra.jpg' %}">
+          <button type="button" name="button">Petra Wallet</button>
+        </div>
+        <div class="wallet" onclick="getAccountMartian()">
+          <img style="margin-left: 20px;" src="{% static 'aptos/images/martian.jpg' %}">
+          <button type="button" name="button">Martian Wallet</button>
+        </div>
+        <!-- <button type="button" onclick="disconnectWalletConnect()" name="button">Disconnect WalletConnect</button> -->
+        </figcaption>
+      </figure>
+    </div>
+
     <h1 style="display:none;">Nft desk. Web3 online NFT bulletin board. 20,000 ad spaces.</h1>
     <nav class="menu">
     <div class="addpaymant">
         <div>
             <!--<img src="{% static 'main/images/Icon/add.png' %}" alt="">-->
-            <buttom id='connectBtnPC' style='display:block;' onclick="getAccount()"><div id="result"></div></buttom>
-            <buttom id='connectBtnMob' style='display:none;' onclick="getAccount()"><img src="{% static 'main/images/premium-icon-wallet-3757939.png' %}" alt=""></buttom>
+            <a href="#wallet" id='connectBtnPC' style='display:block; text-decoration:none;' ><div  id="result"></div></a>
+            <a href="#wallet" id='connectBtnMob' style='display:none;'><img src="{% static 'main/images/premium-icon-wallet-3757939.png' %}" alt=""></a>
         </div>
     </div>
     <div class="logo">

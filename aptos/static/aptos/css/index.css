@@ -204,7 +204,7 @@ img{
     background-color: white;
     /* display: none; */
     filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.25));
-    z-index: 999;
+    z-index: 199;
 }
 
 .pen{
@@ -777,4 +777,130 @@ img{
  .information{
      overflow-y:  scroll;
  }
+}
+
+
+
+/* Закрываем lightbox */
+.lightbox {
+  display: none;
+}
+
+
+/* Открываем lightbox */
+.lightbox:target {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  z-index: 200;
+  border-radius: 10px;
+
+
+}
+
+/* Содержимое lightbox  */
+.lightbox figcaption {
+  top: 21%;
+  /* width: 16rem; */
+  position: relative;
+  padding: 1.5em;
+  background-color: white;
+  border-radius: 10px;
+  z-index: 300;
+  padding: 10px;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+}
+
+
+.lightbox button{
+    padding: 5px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border: 0px;
+    font-size: 32px;
+
+}
+
+.lightbox img{
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+}
+
+/* Кнопка закрытия */
+.lightbox .close {
+  position: relative;
+  display: block;
+  top:21%;
+}
+
+.lightbox .close::after {
+  right: -1rem;
+  top: .6rem;
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  border-radius: 50%;
+  z-index: 400;
+  color: white;
+  content: "×";
+  cursor: pointer;
+}
+
+/* Обёртка lightbox  */
+.lightbox .close::before {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: rgba(0,0,0,.7);
+  content: "";
+  cursor: default;
+}
+
+.wallet {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Syne';
+}
+
+.wallet button{
+    line-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Syne';
+    background-color: transparent;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+.disconnect {
+  display: none;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: 24px;
+  padding-right: 24px;
+  background-color: #0140FF;
+  text-decoration: none;
+  -moz-text-decoration-style: none;
+  color: white;
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  z-index: 100;
 }
