@@ -22,8 +22,8 @@ html{
 /*}*/
 .nft{
   box-sizing: border-box;
-  width: 1%;
-  height: .5%;
+  width: 2%;
+  height: 1%;
   float: left;
   display: inline-block;
    border: solid;
