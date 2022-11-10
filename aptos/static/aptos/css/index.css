@@ -22,8 +22,8 @@ html{
 /*}*/
 .nft{
   box-sizing: border-box;
-  width: 2%;
-  height: 1%;
+  width: 1%;
+  height: .5%;
   float: left;
   display: inline-block;
    border: solid;
@@ -160,6 +160,30 @@ img{
     font-size: 46px;
     line-height: 77px;
 
+}
+
+.network{
+    display: inline-block;
+    top:0;
+    margin-right: 5%;
+    float: right;
+    margin-top: 21px;
+}
+
+.network a{
+  text-decoration: none;
+}
+
+.network h1{
+  background-color: #000;
+filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.25));
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+
+    font-size: 30px;
+    line-height: 27px;
+    padding: 5px;
+    color: white;
 }
 
 .addpaymant{
@@ -778,8 +802,6 @@ img{
      overflow-y:  scroll;
  }
 }
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 
 
@@ -906,7 +928,3 @@ img{
   font-weight: 600;
   z-index: 100;
 }
-=======
->>>>>>> 00550a18346aa5bc466edfc02830dbad19ff47da
-=======
->>>>>>> 00550a18346aa5bc466edfc02830dbad19ff47da

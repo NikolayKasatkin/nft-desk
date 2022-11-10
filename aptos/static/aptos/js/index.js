@@ -91,7 +91,7 @@ window.martian.onNetworkChange((name) => console.log(name));
 
 window.martian.onAccountChange(async (address) => {
 	console.log("Changed address", address);
-	let connectionStatus = await window.aptos.isConnected();
+	let connectionStatus = await window.martian.isConnected();
 	if (connectionStatus) {
 		handleAccountsChanged([address]);
 	} else {

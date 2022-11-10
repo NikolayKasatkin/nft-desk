@@ -162,6 +162,30 @@ img{
 
 }
 
+.network{
+    display: inline-block;
+    top:0;
+    margin-right: 5%;
+    float: right;
+    margin-top: 21px;
+}
+
+.network a{
+  text-decoration: none;
+}
+
+.network h1{
+  background-color: #000;
+filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.25));
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+
+    font-size: 30px;
+    line-height: 27px;
+    padding: 5px;
+    color: white;
+}
+
 .addpaymant{
     display: flex;
     position: absolute;
