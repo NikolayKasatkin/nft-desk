@@ -22,8 +22,8 @@ html{
 /*}*/
 .nft{
   box-sizing: border-box;
-  width: 1%;
-  height: .5%;
+  width: 2%;
+  height: 1%;
   float: left;
   display: inline-block;
    border: solid;
@@ -778,6 +778,7 @@ img{
      overflow-y:  scroll;
  }
 }
+<<<<<<< HEAD
 
 
 
@@ -904,3 +905,5 @@ img{
   font-weight: 600;
   z-index: 100;
 }
+=======
+>>>>>>> 00550a18346aa5bc466edfc02830dbad19ff47da

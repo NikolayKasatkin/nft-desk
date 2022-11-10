@@ -32,6 +32,14 @@ def index(request):
     # version = 0
 
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        # заполнение базы данных
+        # if request.method == 'POST-DB':
+        #     print('this work')
+        #     for i in range(1, 5001):
+        #         aptosImg = ImagesAptos(id_nft = i, image = 'images/green.png', description = '')
+        #         aptosImg.save()
+        #     print('Complete')
+
         if request.method == 'POST':
             idnft = str(request.body).split("'")[1]
             images_to_idnft = ImagesAptos.objects.get(id_nft = idnft).description
