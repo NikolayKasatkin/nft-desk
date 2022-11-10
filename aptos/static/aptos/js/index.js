@@ -115,10 +115,60 @@ function handleAccountsChanged(accounts) {
 
 var openInfo = false;
 
+var image;
+
+
 async function PostAddressAccount() {
 
-    var ball = document.getElementById('map');
-    window.standardWidth = ball.getBoundingClientRect().width;
+		// карта
+		image = document.getElementById('map');
+
+	  image.onmousedown = function(e) {
+	    var coords = getCoords(image);
+	    var shiftX = e.pageX - coords.left;
+	    var shiftY = e.pageY - coords.top;
+
+	    moveAt(e);
+
+	    function moveAt(e) {
+	      image.style.left = e.pageX - shiftX + 'px';
+	      image.style.top = e.pageY - shiftY + 'px';
+	    }
+
+	    document.onmousemove = function(e) {
+	      moveAt(e);
+	    };
+
+	    image.onmouseup = function() {
+	      document.onmousemove = null;
+	      image.onmouseup = null;
+	    };
+	  }
+
+	  function getCoords(elem) {   // кроме IE8-
+	    var box = elem.getBoundingClientRect();
+	    return {
+	      top: box.top + pageYOffset,
+	      left: box.left + pageXOffset
+	    };
+	  }
+
+		window.addEventListener("wheel", onWheel);
+		function onWheel(e) {
+			console.log(e.target);
+		  if (e.target.className == 'nft' || e.target.id == 'map' || e.target.className == 'nft_img'){
+				console.log(234);
+		    var bounding = getBounding(image);
+		    e = e || window.event;
+		    var delta = e.deltaY || e.detail || e.wheelDelta;
+		    image.style.height = bounding.height - 2*delta + 'px';
+		    image.style.width = bounding.width - delta + 'px';
+		    image.style.top = bounding.top + 2*delta*(e.pageY-bounding.top)/bounding.height + 'px';
+		    image.style.left = bounding.left + delta*(e.pageX-bounding.left)/bounding.width + 'px';
+		  }
+		}
+
+		// карта
 
     if (window.screen.width <= 500){
         document.getElementsByClassName('left_box')[0].style.display = 'none';
@@ -130,101 +180,10 @@ async function PostAddressAccount() {
         document.getElementById('connectBtnPC').style.display = 'none';
         document.getElementById('info').style.display = 'none';
     }
-
-    ball.ontouchstart = function(e) {
-          var coords = getCoords(ball);
-    	  var shiftX = e.pageX - coords.left;
-    	  var shiftY = e.pageY - coords.top;
-
-
-          console.log(coords.left, coords.top);
-
-    	  ball.style.position = 'absolute';
-
-    	  moveAt(e);
-
-
-    	  function moveAt(e) {
-    	    var nftmap = document.getElementById('map');
-
-    	      ball.style.left = e.pageX - shiftX + 'px';
-
-    	      ball.style.top = e.pageY - shiftY + 'px';
-
-    	  }
-
-    	  document.ontouchmove = function(e) {
-    	    moveAt(e);
-    	  };
-
-    	  ball.ontouchend = function() {
-    	    document.ontouchmove = null;
-    	    ball.ontouchend = null;
-    	  };
-        }
-
-	//передвижение карты
-	ball.onmousedown = function(e) {
-
-	  var coords = getCoords(ball);
-	  var shiftX = e.pageX - coords.left;
-	  var shiftY = e.pageY - coords.top;
-
-
-      console.log(coords.left, coords.top);
-
-	  ball.style.position = 'absolute';
-
-	  moveAt(e);
-
-
-	  function moveAt(e) {
-	    var nftmap = document.getElementById('map');
-
-	      ball.style.left = e.pageX - shiftX + 'px';
-
-	      ball.style.top = e.pageY - shiftY + 'px';
-
-	  }
-
-	  document.onmousemove = function(e) {
-	    moveAt(e);
-	  };
-
-	  ball.onmouseup = function() {
-	    document.onmousemove = null;
-	    ball.onmouseup = null;
-	  };
-
-	}
-
-	ball.ondragstart = function() {
-	  return false;
-	};
-
-
-	function getCoords(elem) {   // кроме IE8-
-	  var box = elem.getBoundingClientRect();
-	  return {
-	    top: box.top + pageYOffset,
-	    left: box.left + pageXOffset
-	  };
-	}
-
-	var nftmap = document.getElementById('map');
-	var nftbutton = document.getElementById('nft');
-	var buttom = document.createElement("buttom");
-
-	window.firstHeight = nftmap.offsetHeight;
-
 	document.getElementById('result').innerHTML = 'connect wallet';
 	web3providerPetra();
 }
 
-
-
-
-var countZoom = 1;
 
 
 
@@ -368,151 +327,33 @@ function click(e) {
 	sel.setAttribute('onclick','mint(' + elem.id + ')');
   }
 }
-var clck = true;
-var firstHeight = 0;
 
-var plmn = true;
-function zoom(delta){
-  var nftmap = document.getElementById('map');
-  var centerHei = window.screen.height/2;
-    if (window.screen.width <= 500){
-        var centerWin = window.screen.width/2;
-    }
-    else{
-       var centerWin = window.screen.width*0.625;
-    }
-    var nftmapClient = nftmap.getBoundingClientRect();
-    if (!(document.elementFromPoint(centerWin, centerHei).className == 'nft' || document.elementFromPoint(centerWin, centerHei).className == 'nft_img')){
-        centerWin = nftmapClient.width/2 + nftmapClient.left;
-        centerHei = nftmapClient.height/2 + nftmapClient.top;
-    }
-    var cordMouseOnBlockX = centerWin - nftmapClient.left;
-    var cordMouseOnBlockY = centerHei - nftmapClient.top;
-    var percentegeCMOBX = cordMouseOnBlockX/nftmapClient.width;
-    var percentegeCMOBY = cordMouseOnBlockY/nftmapClient.height;
-    if (countZoom > 1 && countZoom < 9 && delta > 0){
-      if(countZoom == 2){
-        countZoom = 1.4;
-      }
-      else if(countZoom == 1.4){
-          countZoom = 1.2;
-      }
-      else if(countZoom == 1.2){
-          countZoom = 1;
-      }
-      else{
-        countZoom --;
-      }
 
-      nftmap.style.width = standardWidth * countZoom * countZoom + 'px';
-      nftmap.style.height = 2 * standardWidth * countZoom * countZoom + 'px';
 
-      var perNewX = percentegeCMOBX * document.getElementById('map').getBoundingClientRect().width;
-      var perNewY = percentegeCMOBY * document.getElementById('map').getBoundingClientRect().height;
-      var itogoX = -(perNewX - centerWin);
-      var itogoY = -(perNewY - centerHei);
-      nftmap.style.left = itogoX +'px';
-      nftmap.style.top = itogoY +'px';
-    }
-    else if (countZoom > 0 && countZoom < 8 && delta < 0){
-      if(countZoom == 1){
-        countZoom = 1.2;
-      }
-      else if(countZoom == 1.2){
-          countZoom = 1.4;
-      }
-      else if(countZoom == 1.4){
-          countZoom = 2;
-      }
-      else{
-        countZoom++;
-      }
 
-      nftmap.style.width = standardWidth * countZoom * countZoom + 'px';
-      nftmap.style.height = 2 * standardWidth * countZoom * countZoom + 'px';
 
-      var perNewX = percentegeCMOBX * document.getElementById('map').getBoundingClientRect().width;
-      var perNewY = percentegeCMOBY * document.getElementById('map').getBoundingClientRect().height;
-      var itogoX = -(perNewX - centerWin);
-      var itogoY = -(perNewY - centerHei);
-      nftmap.style.left = itogoX +'px';
-      nftmap.style.top = itogoY +'px';
-    }
+function getBounding(image){
+  var box = image.getBoundingClientRect();
+  return {
+    height: box.height,
+    width: box.width,
+    top: box.top,
+    left: box.left
+  };
 }
 
-var standardWidth;
-window.addEventListener("wheel", onWheel);
-function onWheel(e) {
-  console.log(document.elementFromPoint(e.pageX, e.pageY));
-  if (document.elementFromPoint(e.pageX, e.pageY).className == 'nft' || document.elementFromPoint(e.pageX, e.pageY).className == 'map' || document.elementFromPoint(e.pageX, e.pageY).className == 'nft_img'){
-    var nftmap = document.getElementById('map');
-    e = e || window.event;
-    var delta = e.deltaY || e.detail || e.wheelDelta;
-
-    var nftmapClient = nftmap.getBoundingClientRect();
-    var cordMouseOnBlockX = e.pageX - nftmapClient.left;
-    var cordMouseOnBlockY = e.pageY - nftmapClient.top;
-    var percentegeCMOBX = cordMouseOnBlockX/nftmapClient.width;
-    var percentegeCMOBY = cordMouseOnBlockY/nftmapClient.height;
-
-    if (countZoom > 1 && countZoom < 9 && delta > 0){
-      if(countZoom == 2){
-        countZoom = 1.4;
-      }
-      else if(countZoom == 1.4){
-          countZoom = 1.2;
-      }
-      else if(countZoom == 1.2){
-          countZoom = 1;
-      }
-      else{
-        countZoom --;
-      }
-
-      nftmap.style.width = standardWidth * countZoom * countZoom + 'px';
-      nftmap.style.height = 2 * standardWidth * countZoom * countZoom + 'px';
-
-      var perNewX = percentegeCMOBX * document.getElementById('map').getBoundingClientRect().width;
-      var perNewY = percentegeCMOBY * document.getElementById('map').getBoundingClientRect().height;
-      var itogoX = -(perNewX - e.pageX);
-      var itogoY = -(perNewY - e.pageY);
-      nftmap.style.left = itogoX +'px';
-      nftmap.style.top = itogoY +'px';
-    }
-    else if (countZoom > 0 && countZoom < 8 && delta < 0){
-      if(countZoom == 1){
-        countZoom = 1.2;
-      }
-      else if(countZoom == 1.2){
-          countZoom = 1.4;
-      }
-      else if(countZoom == 1.4){
-          countZoom = 2;
-      }
-      else{
-        countZoom++;
-      }
-
-      nftmap.style.width = standardWidth * countZoom * countZoom + 'px';
-      nftmap.style.height = 2 * standardWidth * countZoom * countZoom + 'px';
-
-      var perNewX = percentegeCMOBX * document.getElementById('map').getBoundingClientRect().width;
-      var perNewY = percentegeCMOBY * document.getElementById('map').getBoundingClientRect().height;
-      var itogoX = -(perNewX - e.pageX);
-      var itogoY = -(perNewY - e.pageY);
-      nftmap.style.left = itogoX +'px';
-      nftmap.style.top = itogoY +'px';
-    }
+function zoom(z){
+	var zoomCount = 1000;
+  if (document.elementFromPoint(window.innerWidth/2, window.innerHeight/2).className == 'nft' ||  document.elementFromPoint(window.innerWidth/2, window.innerHeight/2).className == 'map' || document.elementFromPoint(window.innerWidth/2, window.innerHeight/2).className == 'nft_img'){
+    var bounding = getBounding(image);
+    image.style.height = bounding.height + 2*z*zoomCount + 'px';
+    image.style.width = bounding.width + z*zoomCount + 'px';
+    image.style.top = bounding.top - 2*z*zoomCount*(window.innerHeight/2-bounding.top)/bounding.height + 'px';
+    image.style.left = bounding.left - z*zoomCount*(window.innerWidth/2-bounding.left)/bounding.width + 'px';
   }
 }
 
-function minimap(){
-  var nftmap = document.getElementById('map');
-  var body = document.getElementById('body');
-  var minimap = nftmap.cloneNode(true);
-  minimap.id = "minimap";
-  body.appendChild(minimap);
-}
+
 
 function closeInfo(){
     openInfo = false;

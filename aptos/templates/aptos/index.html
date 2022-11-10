@@ -194,17 +194,15 @@
       <div class="bottom_botoom"></div>
       <div class="top_top"></div>
     <div class="plus">
-      <button onclick='zoom(-1)' class='plusBtn'>+</button>
-      <button onclick='zoom(1)'>-</button>
+      <button onclick='zoom(1)' class='plusBtn'>+</button>
+      <button onclick='zoom(-1)'>-</button>
     </div>
       <!-- Заполнить БД -->
       <!-- <button type="button" name="button" onclick="bdwrite()">write</button> -->
 
       <div id="map" class="map">
         {% for i in images %}
-          <div class="nft">
-            <img id="{{i.id_nft}}" class="nft_img" src="{{i.image.url}}" alt="">
-          </div>
+          <button style="background-image: url('{{i.image.url}}');" class="nft" type="button" name="button"></button>
         {% endfor %}
       </div>
 
