@@ -1,0 +1,934 @@
+html{
+  overflow:  hidden;
+  touch-action: none;
+}
+#map{
+  /* margin-left: 50px; */
+  /*margin-top: 9.5vh;*/
+  /*margin-left: 40vw;*/
+  width: 40vh;
+  height: 80vh;
+  top:10vh;
+  left: 50vw;
+  position:absolute;
+  /* transform: scale(1, 1); */
+  z-index: 1;
+}
+/*#map:hover{*/
+/*    cursor:grab;
+}*/
+/*#map:active{*/
+/*    cursor:grabbing;*/
+/*}*/
+.nft{
+  box-sizing: border-box;
+  width: 2%;
+  height: 1%;
+  float: left;
+  display: inline-block;
+   border: solid;
+  border-width: 1px;
+  margin: 0 0 0 0;
+  background-repeat: no-repeat;
+  background-image: url("img.png");
+  background-size: contain;
+  cursor: pointer;
+}
+/* .nft_img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 0 0;
+} */
+.zoom{
+  position: absolute;
+  top: 40px;
+  left: 12vw;
+}
+.unzoom{
+  position: absolute;
+  top: 60px;
+  left: 12vw;
+}
+#minimap{
+  width: 10vw;
+  height: 10vw;
+  position: absolute;
+  top: 40px; left: 40px;
+}
+img{
+  width: 100%;
+  height: 100%;
+  /* display: none; */
+}
+
+.top_box{
+  width: 100vw;
+  height: 10vh;
+  background-color: white;
+  z-index: 2;
+  position: absolute;
+  border-bottom: solid;
+  border-width: 2px;
+  left: 30vw;
+}
+
+.bottom_box{
+  width: 65vw;
+  height: 10vh;
+  background-color: white;
+  z-index: 2;
+  position: absolute;
+  top: 90vh;
+  border-top: solid;
+  border-width: 2px;
+  left: 30vw;
+}
+
+.left_box{
+  width: 30vw;
+  height: 100vh;
+  background-color: white;
+  z-index: 2;
+  position: absolute;
+  border-right: solid;
+  border-width: 2px;
+  top: 10vh;
+}
+
+.right_box{
+  width: 5vw;
+  height: 100vh;
+  background-color: white;
+  z-index: 2;
+  position: absolute;
+  left: 95vw;
+  border-left: solid;
+  border-width: 2px;
+  top: 10vh;
+}
+
+.bottom_botoom{
+  width: 5vw;
+  height: 9.9vh;
+  background-color: white;
+  z-index: 2;
+  position: absolute;
+  top: 90.1vh;
+  left: 95vw;
+}
+
+.top_top{
+  width: 30vw;
+  height: 10vh;
+  background-color: white;
+  z-index: 2;
+  position: absolute;
+}
+
+
+.form-control2{
+  visibility: hidden;
+  height: 10px;
+}
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+.menu{
+    margin-top:0;
+    position: relative;
+    width: 100%;
+    z-index: 4;
+}
+
+
+.logo{
+    display: inline-block;
+    position: absolute;
+    top:0;
+    left: 45%;
+}
+
+.logo h1{
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    font-weight: 700;
+    font-size: 46px;
+    line-height: 77px;
+
+}
+
+.network{
+    display: inline-block;
+    top:0;
+    margin-right: 5%;
+    float: right;
+    margin-top: 21px;
+}
+
+.network a{
+  text-decoration: none;
+}
+
+.network h1{
+  background-color: #000;
+filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.25));
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+
+    font-size: 30px;
+    line-height: 27px;
+    padding: 5px;
+    color: white;
+}
+
+.addpaymant{
+    display: flex;
+    position: absolute;
+    top:23px;
+    left: 4%;
+    cursor: pointer;
+
+
+}
+
+.addpaymant div{
+
+    font-family: 'Inter', sans-serif;
+    text-decoration: none;
+    color: black;
+    display: flex;
+    font-size: 30px;
+
+}
+
+.addpaymant div buttom{
+    margin-left: 4px;
+}
+
+.addpaymant img{
+    width: 20px;
+    height: 20px;
+
+}
+
+
+.information{
+    position: absolute;
+    /*border-radius: 20px;*/
+    margin-top: 10vh;
+    margin-left: .5vw;
+    width: 29vw;
+    max-width: 400px;
+    height: auto;
+    background-color: white;
+    /* display: none; */
+    filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.25));
+    z-index: 199;
+}
+
+.pen{
+    position: flex;
+    margin-left: 70%;
+    width: 10%;
+    height:auto;
+    cursor: pointer;
+}
+.pen button{
+    width:100%;
+}
+.h2of div{
+    display: inline-block;
+}
+
+.img_of_nft{
+  max-width: 339px;
+  max-height: 339px;
+  width: 25vw;
+  height: 25vw;
+  margin-top: 32px;
+  margin-left: 31px;
+  margin-right: 31px;
+}
+.information .img_of_nft img{
+    width: 100%;
+    height: 100%;
+    /*border-radius: 20px;*/
+    object-fit: cover;
+    object-position: 0 0 3px 0;
+
+}
+
+.information h1{
+    font-family: 'Inter', sans-serif;
+    font-size: 32px;
+    margin-left: 31px;
+    margin-top: 10px;
+}
+
+.information_owner{
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  margin-left: 31px;
+  margin-top: 10px;
+}
+
+.h2of h2{
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    margin-left: 31px;
+    margin-top: 5px;
+
+}
+
+.h2of_idnft{
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 300;
+  margin-left: 31px;
+  margin-top: 5px;
+}
+
+
+.option p{
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    margin-left: 31px;
+    margin-top: 40px;
+
+}
+
+.option_description{
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  margin-left: 31px;
+  margin-top: 40px;
+}
+
+.paymentclass{
+    margin-top: 40px;
+    margin-left: 31px;
+    margin-bottom: 40px;
+    display: flex;
+
+}
+
+.crypto_coin img{
+    border-radius:30px;
+
+}
+
+.crypto_coin{
+    position: relative;
+    display: inline-block;
+}
+
+.cr{
+    width: 35px;
+    height: 35px;
+}
+
+.crytpo_wallet img{
+    width: 10px;
+    height: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.crytpo_wallet{
+    display: flex;
+    border-radius:30px;
+    display: inline-block;
+    padding-left: 3px;
+    padding-right: 3px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 22px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    right: -0.5px;
+    bottom: 0px;
+}
+
+.Name_of{
+    display: flex;
+    margin-left: 10px;
+    margin-top:10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.buy_info{
+    position: absolute;
+    /*border-radius: 20px;*/
+    background-color: white;
+    filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.25));
+    margin-top: 10vh;
+    margin-left: .5vw;
+    width: 400px;
+    height: 90wh;
+    z-index: 3;
+}
+.photo{
+    display: flex;
+}
+
+.upload{
+    width: 19px;
+    height: 19px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.photo h1{
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.uplod_div{
+    display: flex;
+    margin-left: 10px;
+    align-items: center;
+}
+
+.uplod_div h1{
+    margin-left: 4px;
+    font-size: 30px;
+}
+
+.input_name{
+    margin-top: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 35px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    border: none;
+    padding-left: 4px;
+    padding-top: 10px;
+
+}
+
+.input_option{
+    margin-top: 10px;
+    width: 100%;
+    height:120px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    border: none;
+    resize: none;
+}
+
+
+.form-control{
+  height: 60px;
+  margin-left: 50px;
+  margin-top: 10px;
+}
+
+.form-control3{
+    margin-top: 10px;
+    width: 90%;
+    margin-left: 5%;
+    height:120px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    border: none;
+    resize: none;
+    padding: 2px;
+}
+.form-control3:focus{
+  outline: 0;
+  outline-offset: 0;
+}
+
+.form {
+    margin-top: 30px;
+    font-family: 'Inter', sans-serif;
+
+}
+.form label{
+    font-size: 17px;
+    font-weight: 800;
+    margin-left: 20px;;
+}
+
+.Xcor{
+    display: flex;
+}
+.Ycor{
+    display: flex;
+}
+.cordinate{
+    display: flex;
+}
+.cordx{
+    width: 54px;
+    height: 35px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    width: 100%;
+    min-width: 54px;
+    padding-left: 8px;
+    padding-right: 8px;
+
+}
+.cordy{
+    width: 54px;
+    height: 35px;
+    background: #FFFFFF;
+    box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    width: 100%;
+    min-width: 54px;
+    padding: 2px;
+    padding-left: 8px;
+    padding-right: 8px;
+
+
+}
+
+.cordx p{
+    text-align: center;
+    margin-top: 7px;
+
+}
+.cordy p {
+    text-align: center;
+    margin-top: 7px;
+}
+
+.cordinate h3{
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    align-items: center;
+}
+
+.Xcor h3{
+    margin-top: 5px;
+    margin-right: 4px;
+}
+
+.Ycor h3{
+    margin-left: 5px;
+    margin-top: 5px;
+    margin-right: 4px;
+}
+
+.special_name{
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    margin-left: 20px;
+}
+
+.button_save button{
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 20px;
+    width: 90%;
+    margin-left: 5%;
+    margin-bottom: 20px;
+    height: 50px;
+    background: #000000;
+    margin-top: 30px;
+    /*border-radius: 30px;*/
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+.discandtwiter__row{
+    display: inline-block;
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+}
+.discandtwiter__row div{
+    height: 50px;
+    width: 30%;
+    display: inline-block;
+}
+.discandtwiter{
+    z-index:3;
+    position: absolute;
+    margin-left: 10px;
+    margin-top: 10px;
+    display: flex;
+    /*align-items: center;*/
+    width: 29vw;
+    max-width: 400px;
+    justify-content: center;
+}
+
+.close{
+    margin-left: 80%;
+    cursor:pointer;
+    height: 25px;
+
+}
+
+.plus{
+    cursor:pointer;
+    position: absolute;
+    max-width:50px;
+    max-height:100px;
+    width: 7vw;
+    height: 14vw;
+    margin-top: 12vh;
+    margin-left: 90vw;
+    z-index: 10;
+}
+
+.plus button{
+    cursor:pointer;
+    width: 100%;
+    height: 50%;
+    border: none;
+    z-index:10;
+    display:block;
+    font-size: 22px;
+    color:black;
+}
+
+.closeInfo{
+    display:none;
+}
+
+@media (max-width: 500px) {
+    .closeInfo{
+        display: block;
+        background-color:white;
+        color: black;
+        margin-left: 90vw;
+        border:none;
+        cursor:pointer;
+        width:25px;
+        height:25px;
+        font-size: 25px;
+    }
+
+    #map{
+      width: 100vw;
+      height: 200vw;
+      top:10vh;
+      left:0px;
+      position:absolute;
+      /*transform: scale(1, 1);*/
+      z-index: 1;
+    }
+    .information{
+        margin-left: 0px;
+        position: absolute;
+        margin-top: 10vh;
+        /*margin-bottom: 10vh;*/
+        width: 100vw;
+        height: 90vh;
+        background-color: white;
+        /*filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.25));*/
+        z-index: 3;
+        overflow-y:  scroll;
+    }
+    .plus{
+        position: absolute;
+        width: 7vw;
+        height: 14vw;
+        margin-top: 12vh;
+        margin-left: 90vw;
+        z-index: 10;
+    }
+
+    .plus button{
+        width: 100%;
+        height: 50%;
+        border: none;
+        z-index:10;
+        display:block;
+        font-size: 18px;
+        color:black;
+    }
+
+    /*.plusBtn{*/
+    /*    border-bottom:solid;*/
+    /*    border-width: 1px;*/
+    /*}*/
+
+    .img_of_nft{
+      width: 90vw;
+      height: 90vw;
+      margin-top: 5vw;
+      margin-left: 5vw;
+    }
+
+    .information h1{
+        font-family: 'Inter', sans-serif;
+        font-size: 32px;
+        margin-left: 31px;
+        margin-top: 10px;
+    }
+
+    .information_owner{
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      margin-left: 31px;
+      margin-top: 10px;
+    }
+
+    .h2of h2{
+        font-family: 'Inter', sans-serif;
+        font-size: 24px;
+        font-weight: 300;
+        margin-left: 31px;
+        margin-top: 5px;
+
+    }
+
+    .h2of_idnft{
+      font-family: 'Inter', sans-serif;
+      font-size: 24px;
+      font-weight: 300;
+      margin-left: 31px;
+      margin-top: 5px;
+    }
+    .buy_info{
+        position: absolute;
+        background-color: white;
+        filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.25));
+        margin-top: 10vh;
+        margin-left: .5vw;
+        width: 99vw;
+        height: 80vh;
+        z-index: 3;
+    }
+    .logo{
+        display: inline-block;
+        position: absolute;
+        top:0px;
+        left: 0px;
+        width: 100vw;
+    }
+
+    .logo h1{
+        font-family: 'Inter', sans-serif;
+        text-align: center;
+        font-weight: 700;
+        font-size: 46px;
+        line-height: 77px;
+    }
+
+    .addpaymant{
+        /*display: none;*/
+        display: flex;
+        position: absolute;
+        top:23px;
+        left: 4%;
+        cursor: pointer;
+    }
+
+    #connectBtnMob {
+        width: 10vw;
+        height: 10vw;
+        z-index: 1;
+        box-shadow: 0 0 5px  #FF4500;
+    }
+
+    #connectBtnMob img{
+        width: 100%;
+        height: 100%;
+    }
+
+    .addpaymant div{
+        font-family: 'Inter', sans-serif;
+        text-decoration: none;
+        color: black;
+        display: flex;
+        font-size: 30px;
+    }
+
+    .addpaymant div buttom{
+        margin-left: 4px;
+    }
+
+    .addpaymant img{
+        width: 20px;
+        height: 20px;
+    }
+    .top_box{
+      box-sizing: border-box;
+      width: 100vw;
+      height: 10vh;
+      background-color: white;
+      z-index: 2;
+      position: absolute;
+      border: solid;
+      border-width: 2px;
+      left: 0vw;
+    }
+    .discandtwiter{
+        z-index:3;
+        position: absolute;
+        margin-left: 0.5vw;
+        margin-top: 10px;
+        margin-bottom: 10vh;
+        display: flex;
+        /*align-items: center;*/
+        width: 100vw;
+        justify-content: center;
+    }
+}
+
+@media (max-height: 650px) {
+ .buy_info{
+     overflow-y:  scroll;
+ }
+ .information{
+     overflow-y:  scroll;
+ }
+}
+
+
+
+/* Закрываем lightbox */
+.lightbox {
+  display: none;
+}
+
+
+/* Открываем lightbox */
+.lightbox:target {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  z-index: 200;
+  border-radius: 10px;
+
+
+}
+
+/* Содержимое lightbox  */
+.lightbox figcaption {
+  top: 21%;
+  /* width: 16rem; */
+  position: relative;
+  padding: 1.5em;
+  background-color: white;
+  border-radius: 10px;
+  z-index: 300;
+  padding: 10px;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+}
+
+
+.lightbox button{
+    padding: 5px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    border: 0px;
+    font-size: 32px;
+
+}
+
+.lightbox img{
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+}
+
+/* Кнопка закрытия */
+.lightbox .close {
+  position: relative;
+  display: block;
+  top:21%;
+}
+
+.lightbox .close::after {
+  right: -1rem;
+  top: .6rem;
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  border-radius: 50%;
+  z-index: 400;
+  color: white;
+  content: "×";
+  cursor: pointer;
+}
+
+/* Обёртка lightbox  */
+.lightbox .close::before {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: rgba(0,0,0,.7);
+  content: "";
+  cursor: default;
+}
+
+.wallet {
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Syne';
+}
+
+.wallet button{
+    line-height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Syne';
+    background-color: transparent;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+.disconnect {
+  display: none;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  padding-left: 24px;
+  padding-right: 24px;
+  background-color: #0140FF;
+  text-decoration: none;
+  -moz-text-decoration-style: none;
+  color: white;
+  font-family: 'Syne', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  z-index: 100;
+}

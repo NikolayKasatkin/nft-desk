@@ -14,32 +14,15 @@
     <div class="nft-dek">
         <div class="container">
             <div class="nft_dek">
+              <div class="nft_dek_logo">
                 <h1>APT</h1><img src="{% static 'aptos/images/aptos.png' %}" alt=""><h1>S nft desk</h1>
+              </div>
                 <p style='font-weight: 700;font-size: 25px;'>*minimalism, utility, free mint*</p><br>
                 <p style='font-weight: 700;font-size: 45px;'>COMMING SOOn<span style="font-size: 12px;"></p>
                 <p style='font-weight: 900;font-size: 35px;' id="timer"></p>
             </div>
-            <!-- <div class="discandtwiter">
-                <div class="discandtwiter__row">
-                    <div class="eth" style="margin-left:50px;margin-right:50px;justify-content: center;width:150px;">
-                       <div class="eth_link">
-                         <a href="/eth">eth</a>
-                       </div>
-                       <div class="eth_p">
-                         <p>nft desk</p>
-                       </div>
-                    </div>
-                    <div class="discord" style="margin-left:50px;margin-right:50px;justify-content: center;">
-                       <a target="_blank" style="justify-content: center;" href="https://discord.gg/FU3ePxAZaR" > <img style="justify-content: center;" height="100px" src="{% static 'main/images/discord-alt-svgrepo-com.svg' %}"></a>
-                    </div>
-                    <div class="twitter" style="margin-left:50px;margin-right:50px;justify-content: center;" style="display: flex; justify-content: center; align-items: center;width:150px; ">
-                       <a target="_blank" href="https://twitter.com/ndesk_io"><img style="margin-bottom: 1px;padding:40px;" height="70px"  src="{% static 'main/images/twitter-svgrepo-com.svg' %}"></a>
-                    </div>
-                </div>
-            </div> -->
             <div class="discandtwiter">
                 <div class="discandtwiter__row">
-
                     <div class="box" >
                       <div class="eth" style="width:150px;">
                          <div class="eth_link">
@@ -85,6 +68,14 @@
             font-family: 'Inter Bold';
             src: url({% static 'main/font/Inter Font/static/inter-Bold.ttf' %});
         }
+        .nft_dek_logo{
+          width: 100%;
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center;
+          margin-right: 0px;
+          justify-content: center;
+        }
         .nft_dek {
           width: 800px;
         }
@@ -95,18 +86,14 @@
           padding-right: 40px;
         }
         .box {
-          margin-left: 40px;
+          display: flex;
+          flex-wrap: wrap;
           align-items: center;
           margin-right: 0px;
           justify-content: center;
           width: calc(680px/3);
         }
         .eth{
-          /* display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-right:150px; */
-          /* position:fixed; */
           width: 150px;
           height: 100px;
         }
@@ -171,7 +158,7 @@
 
         }
         .discandtwiter__row div{
-            /* margin-right: 10px; */
+
         }
         .discandtwiter{
             margin-top: 10px;
@@ -212,7 +199,7 @@
             width: 100%;
         }
         .join p{
-            /*font-size: 18px;*/
+
             text-align: center;
             margin-block-end: 0em;
             margin-inline-start: 0px;
@@ -223,6 +210,27 @@
             font-weight: 700;
             font-size: 25px;
         }
+
+        @media screen and (max-width:800px){
+            .discandtwiter{
+                width: 350px;
+            }
+            .container{
+                width: 350px;
+            }
+            .nft_dek h1 {
+              font-size: 35px;
+            }
+            .nft_dek img {
+              height: 30px;
+            }
+            .nft_dek_logo {
+              margin-top: 80px;
+              margin-bottom: 80px;
+            }
+
+        }
+
     </style>
 </body>
 </html>
