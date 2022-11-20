@@ -116,13 +116,14 @@ function handleAccountsChanged(accounts) {
 var openInfo = false;
 
 var image;
-
+var maxMapSize;
+var minMapSize;
 
 async function PostAddressAccount() {
-
 		// карта
 		image = document.getElementById('map');
-
+		minMapSize = image.getBoundingClientRect().width;
+		maxMapSize = minMapSize*50;
 	  image.onmousedown = function(e) {
 	    var coords = getCoords(image);
 	    var shiftX = e.pageX - coords.left;
@@ -155,16 +156,16 @@ async function PostAddressAccount() {
 
 		window.addEventListener("wheel", onWheel);
 		function onWheel(e) {
-			console.log(e.target);
 		  if (e.target.className == 'nft' || e.target.id == 'map' || e.target.className == 'nft_img'){
-				console.log(234);
 		    var bounding = getBounding(image);
-		    e = e || window.event;
-		    var delta = e.deltaY || e.detail || e.wheelDelta;
-		    image.style.height = bounding.height - 2*delta + 'px';
-		    image.style.width = bounding.width - delta + 'px';
-		    image.style.top = bounding.top + 2*delta*(e.pageY-bounding.top)/bounding.height + 'px';
-		    image.style.left = bounding.left + delta*(e.pageX-bounding.left)/bounding.width + 'px';
+				e = e || window.event;
+				var delta = e.deltaY || e.detail || e.wheelDelta;
+				if (bounding.width - delta*bounding.width/500 >= minMapSize && bounding.width - delta*bounding.width/500 <= maxMapSize){
+			    image.style.height = bounding.height - 2*delta*bounding.width/500 + 'px';
+			    image.style.width = bounding.width - delta*bounding.width/500 + 'px';
+			    image.style.top = bounding.top + 2*delta*(e.pageY-bounding.top)/bounding.height*bounding.width/500 + 'px';
+			    image.style.left = bounding.left + delta*(e.pageX-bounding.left)/bounding.width*bounding.width/500 + 'px';
+				}
 		  }
 		}
 
@@ -309,24 +310,24 @@ function bdwrite() {
 	});
 }
 
-window.addEventListener("click", click);
-function click(e) {
-  let elem = document.elementFromPoint(e.pageX, e.pageY);
-  if (elem.className == 'nft'){
-    elem = elem.childNodes[1];
-  }
-  if (elem.className == 'nft_img'){
-    if (openInfo == false && window.screen.width <= 500){
-        document.getElementById('info').style.display = 'inline';
-        document.getElementsByClassName('plus')[0].style.display = 'none';
-        document.getElementById('map').style.display = 'none';
-	    openInfo = true;
-	}
-	read(elem.id);
-	let sel = document.getElementById('#Id');
-	sel.setAttribute('onclick','mint(' + elem.id + ')');
-  }
-}
+// window.addEventListener("click", click);
+// function click(e) {
+//   let elem = document.elementFromPoint(e.pageX, e.pageY);
+//   if (elem.className == 'nft'){
+//     elem = elem.childNodes[1];
+//   }
+//   if (elem.className == 'nft_img'){
+//     if (openInfo == false && window.screen.width <= 500){
+//         document.getElementById('info').style.display = 'inline';
+//         document.getElementsByClassName('plus')[0].style.display = 'none';
+//         document.getElementById('map').style.display = 'none';
+// 	    openInfo = true;
+// 	}
+// 	read(elem.id);
+// 	let sel = document.getElementById('#Id');
+// 	sel.setAttribute('onclick','mint(' + elem.id + ')');
+//   }
+// }
 
 
 
@@ -343,13 +344,21 @@ function getBounding(image){
 }
 
 function zoom(z){
-	var zoomCount = 1000;
-  if (document.elementFromPoint(window.innerWidth/2, window.innerHeight/2).className == 'nft' ||  document.elementFromPoint(window.innerWidth/2, window.innerHeight/2).className == 'map' || document.elementFromPoint(window.innerWidth/2, window.innerHeight/2).className == 'nft_img'){
-    var bounding = getBounding(image);
-    image.style.height = bounding.height + 2*z*zoomCount + 'px';
-    image.style.width = bounding.width + z*zoomCount + 'px';
-    image.style.top = bounding.top - 2*z*zoomCount*(window.innerHeight/2-bounding.top)/bounding.height + 'px';
-    image.style.left = bounding.left - z*zoomCount*(window.innerWidth/2-bounding.left)/bounding.width + 'px';
+	var zoomCount = 500;
+  if (document.elementFromPoint(window.innerWidth*0.625, window.innerHeight/2).className == 'nft' ||  document.elementFromPoint(window.innerWidth*0.625, window.innerHeight/2).className == 'map' || document.elementFromPoint(window.innerWidth*0.625, window.innerHeight/2).className == 'nft_img'){
+		let timerId = setInterval(function() {
+			var bounding = getBounding(image);
+			if (bounding.width + z*zoomCount*bounding.width/100/100 >= minMapSize && bounding.width + z*zoomCount*bounding.width/100/100 <= maxMapSize){
+				image.style.height = bounding.height + 2*z*zoomCount*bounding.width/100/100 + 'px';
+		    image.style.width = bounding.width + z*zoomCount*bounding.width/100/100 + 'px';
+		    image.style.top = bounding.top - 2*z*zoomCount*(window.innerHeight/2-bounding.top)/bounding.height*bounding.width/100/100 + 'px';
+		    image.style.left = bounding.left - z*zoomCount*(window.innerWidth*0.625-bounding.left)/bounding.width*bounding.width/100/100 + 'px';
+			}
+			else{
+				clearInterval(timerId);
+			}
+			setTimeout(() => { clearInterval(timerId); }, 500);
+		}, 10);
   }
 }
 
