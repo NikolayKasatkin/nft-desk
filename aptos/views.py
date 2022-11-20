@@ -61,7 +61,7 @@ def index(request):
 
 
     if dataGet <= 0:
-        return render(request, 'aptos/index.html', data)
+        return render(request, 'aptos/preloader.html', data) #previos index.html
     else:
         return render(request, 'aptos/preloader.html')
 

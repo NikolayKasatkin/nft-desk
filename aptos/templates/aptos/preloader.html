@@ -14,22 +14,58 @@
     <div class="nft-dek">
         <div class="container">
             <div class="nft_dek">
-                <h1 style='font-weight: 900;font-size: 99px;'>nft desk</h1>
-                <p style='font-weight: 700;font-size: 25px;'>.web3.online.desk.</p><br>
-                <p style='font-weight: 700;font-size: 25px;'>.minting.starts.in:<span style="font-size: 12px;"></p>
+                <h1>APT</h1><img src="{% static 'aptos/images/aptos.png' %}" alt=""><h1>S nft desk</h1>
+                <p style='font-weight: 700;font-size: 25px;'>*minimalism, utility, free mint*</p><br>
+                <p style='font-weight: 700;font-size: 45px;'>COMMING SOOn<span style="font-size: 12px;"></p>
                 <p style='font-weight: 900;font-size: 35px;' id="timer"></p>
             </div>
+            <!-- <div class="discandtwiter">
+                <div class="discandtwiter__row">
+                    <div class="eth" style="margin-left:50px;margin-right:50px;justify-content: center;width:150px;">
+                       <div class="eth_link">
+                         <a href="/eth">eth</a>
+                       </div>
+                       <div class="eth_p">
+                         <p>nft desk</p>
+                       </div>
+                    </div>
+                    <div class="discord" style="margin-left:50px;margin-right:50px;justify-content: center;">
+                       <a target="_blank" style="justify-content: center;" href="https://discord.gg/FU3ePxAZaR" > <img style="justify-content: center;" height="100px" src="{% static 'main/images/discord-alt-svgrepo-com.svg' %}"></a>
+                    </div>
+                    <div class="twitter" style="margin-left:50px;margin-right:50px;justify-content: center;" style="display: flex; justify-content: center; align-items: center;width:150px; ">
+                       <a target="_blank" href="https://twitter.com/ndesk_io"><img style="margin-bottom: 1px;padding:40px;" height="70px"  src="{% static 'main/images/twitter-svgrepo-com.svg' %}"></a>
+                    </div>
+                </div>
+            </div> -->
             <div class="discandtwiter">
                 <div class="discandtwiter__row">
-                    <div class="discord">
-                       <a target="_blank" href="https://discord.gg/FU3ePxAZaR"> <img height="100px" src="{% static 'main/images/discord-alt-svgrepo-com.svg' %}"></a>
+
+                    <div class="box" >
+                      <div class="eth" style="width:150px;">
+                         <div class="eth_link">
+                           <a href="/eth">eth</a>
+                         </div>
+                         <div class="eth_p">
+                           <p>nft desk</p>
+                         </div>
+                      </div>
+                       <img height="150px" src="{% static 'aptos/images/ndeskqr.png' %}">
                     </div>
-                    <div class="twitter" style="display: flex; justify-content: center; align-items: center;">
-                       <a target="_blank" href="https://twitter.com/ndesk_io"><img style="margin-bottom: 1px;" height="70px"  src="{% static 'main/images/twitter-svgrepo-com.svg' %}"></a>
+
+                    <div class="box" >
+                      <div class="discord" >
+                         <a target="_blank" style="padding:25px;" href="https://discord.gg/FU3ePxAZaR" > <img style="justify-content: center;" height="100px" src="{% static 'main/images/discord-alt-svgrepo-com.svg' %}"></a>
+                      </div>
+                       <img height="150px" src="{% static 'aptos/images/discordqr.png' %}">
                     </div>
-                    <div class="join">
-                        <p>.join.community.</p>
+
+                    <div class="box">
+                      <div class="twitter" >
+                         <a target="_blank" href="https://twitter.com/ndesk_io"><img class='twitter_img' height="70px"  src="{% static 'main/images/twitter-svgrepo-com.svg' %}"></a>
+                      </div>
+                       <img style="justify-content: center;" height="150px"  src="{% static 'aptos/images/twitterqr.png' %}">
                     </div>
+
                 </div>
             </div>
         </div>
@@ -49,14 +85,82 @@
             font-family: 'Inter Bold';
             src: url({% static 'main/font/Inter Font/static/inter-Bold.ttf' %});
         }
+        .nft_dek {
+          width: 800px;
+        }
+        .twitter_img {
+          padding-top: 0px;
+          padding-bottom: 20px;
+          padding-left: 40px;
+          padding-right: 40px;
+        }
+        .box {
+          margin-left: 40px;
+          align-items: center;
+          margin-right: 0px;
+          justify-content: center;
+          width: calc(680px/3);
+        }
+        .eth{
+          /* display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right:150px; */
+          /* position:fixed; */
+          width: 150px;
+          height: 100px;
+        }
+        .eth_link{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          line-height: 50px;
+          margin: 0;
+          left: 0;
+          top: 0;
+          width: 150px;
+          height: 50px;
+          z-index: 1;
+        }
+        .eth_link a {
+          font-family: 'Inter Bold';
+          src: url({% static 'main/font/Inter Font/static/inter-Bold.ttf' %});
+          font-size: 25px;
+          font-weight: 900;
+          text-decoration: none;
+          color: green;
+        }
+        .eth_p {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          line-height: 50px;
+          margin: 0;
+          left: 0;
+          top: 0;
+          width: 150px;
+          height: 30px;
+          z-index: 2;
+        }
+        .eth_p p {
+          font-family: 'Inter Bold';
+          src: url({% static 'main/font/Inter Font/static/inter-Bold.ttf' %});
+          font-size: 25px;
+          font-weight: 900;
+          color: black;
+        }
         .nft_dek h1{
          font-family: "Inter Bold";
-         font-size: 80px;
+         font-size: 99px;
          margin-block-start: 0em;
          margin-block-end: 0em;
         margin-inline-start: 0px;
         margin-inline-end: 0px;
-
+        display: inline-block;
+        }
+        .nft_dek img{
+          height: 80px;
+          display: inline-block;
         }
         .discandtwiter__row{
             display: flex;
@@ -67,7 +171,7 @@
 
         }
         .discandtwiter__row div{
-            margin-right: 10px;
+            /* margin-right: 10px; */
         }
         .discandtwiter{
             margin-top: 10px;
@@ -78,7 +182,7 @@
         }
 
         .container{
-            width: 340px;
+            width: 800px;
             display: flex;
             flex-wrap: wrap;
         }
@@ -91,6 +195,7 @@
             height: 100vh;
         }
         .nft_dek p{
+            width: 100%;
             font-size: 18px;
             text-align: center;
             margin-block-end: 0em;
