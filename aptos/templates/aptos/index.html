@@ -153,6 +153,7 @@
                     <img class="upload" src="{% static 'main/images/upload.png' %}">
                     <h1>UPLOAD PHOTO</h1>
                 </div>
+                <!-- <button type="button" name="button">{{form}}</button> -->
                 {% csrf_token %}
                 {{ form.image }}<br><br><br>
                 <label>Description</label><br>
@@ -201,7 +202,7 @@
 
       <div id="map" class="map">
         {% for i in images %}
-          <button style="background-image: url('{{i.image.url}}');" class="nft" type="button" name="button"></button>
+          <button style="background-image: url('{{i.image.url}}');" id="{{i}}" onclick="read({{i}});" class="nft" type="button" name="button"></button>
         {% endfor %}
       </div>
 

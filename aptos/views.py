@@ -12,6 +12,7 @@ from datetime import datetime, date, time
 import datetime as dt
 import time
 from django.shortcuts import redirect
+from .aptosSDK.balance_of import check_ownership
 
 @csrf_exempt
 def index(request):
@@ -40,16 +41,22 @@ def index(request):
         #         aptosImg.save()
         #     print('Complete')
 
+        if request.method == 'GET-TIME':
+            dataGet = round(start_datetime.timestamp() - current_datetime.timestamp())
+            return JsonResponse(dataGet, safe = False)
+
+        if request.method == 'OWNEROF':
+            idnft = str(request.body).split("'")[1].split('&')[0]
+            owner_add = str(request.body).split("'")[1].split('&')[1]
+            result = check_ownership(owner_add, "0x1932569b5429a7f30e62de0bd4af8dbdba914e490577ad65d9c7f8fdb7a67dff", "nft desk", idnft)
+            return JsonResponse(result, safe = False)
+
         if request.method == 'POST':
             idnft = str(request.body).split("'")[1]
             images_to_idnft = ImagesAptos.objects.get(id_nft = idnft).description
             images_idnft_to_idnft = ImagesAptos.objects.get(id_nft = idnft).id_nft
             dat = [images_to_idnft, images_idnft_to_idnft]
             return JsonResponse(dat, safe = False)
-
-        if request.method == 'GET-TIME':
-            dataGet = round(start_datetime.timestamp() - current_datetime.timestamp())
-            return JsonResponse(dataGet, safe = False)
 
     if request.method == 'POST':
         form = ImagesForm(request.POST, request.FILES)
@@ -61,7 +68,7 @@ def index(request):
 
 
     if dataGet <= 0:
-        return render(request, 'aptos/preloader.html', data) #previos index.html
+        return render(request, 'aptos/index.html', data) #previos index.html
     else:
         return render(request, 'aptos/preloader.html')
 

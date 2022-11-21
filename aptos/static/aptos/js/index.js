@@ -99,7 +99,7 @@ window.martian.onAccountChange(async (address) => {
 	}
 });
 
-
+var accountOwner;
 
 // chaange name buttom
 function handleAccountsChanged(accounts) {
@@ -107,6 +107,7 @@ function handleAccountsChanged(accounts) {
 				document.getElementById('result').innerHTML = 'connect wallet';
 				document.getElementById('connectBtnMob').style.boxShadow = '0 0 5px  #FF4500';
     } else {
+				accountOwner = accounts[0];
 				document.getElementById('result').innerHTML = accounts[0].slice (0, 6)+'..'+accounts[0].slice (62, 66);
 				document.getElementById('connectBtnMob').style.boxShadow = 'none';
     }
@@ -195,8 +196,67 @@ async function PostAddressAccount() {
 
 
 async function read(id) {
+	if (openInfo == false && window.screen.width <= 500){
+			document.getElementById('info').style.display = 'inline';
+			document.getElementsByClassName('plus')[0].style.display = 'none';
+			document.getElementById('map').style.display = 'none';
+			openInfo = true;
+	}
+
   let sel = document.getElementById('#Id');
-  let myContract = new web3.eth.Contract(abi, myAddress);
+	sel.setAttribute('onclick','mint(' + id + ')');
+
+	//проверка нфт пользователя или нет
+	$.ajax({
+		url: '',
+		type: 'OWNEROF',
+		dataType: 'json',
+		data: id+'&'+accountOwner,
+		success: function (data){
+			if (data == true){
+					formaA.style.display = "block";
+			}
+			else{
+				formaA.style.display = "none";
+			}
+		},
+		error: function () {
+		}
+	});
+
+	document.getElementById('idnft').innerHTML = 'Land № ' + id;
+	document.getElementById('idnft2').innerHTML = 'Land № ' + id;
+	document.getElementById('id_id_nft').innerHTML = id;
+	let formaV = document.getElementById('description');
+	formaV.style.visibility = "hidden";
+
+	let formaA = document.getElementById('pen');
+	formaA.style.display = "none";
+
+	sorceImg = document.getElementById(id).style.backgroundImage.split('"')[1];
+	document.getElementById('idImg').src = sorceImg;
+	if (sorceImg == '/media/images/green.png') {
+			document.getElementById('ownerOf').innerHTML = 'This land in sale, buy it!';
+			sel.style.visibility = "visible";
+	} else {
+			document.getElementById('ownerOf').innerHTML = 'This land is sold out!';
+			sel.style.visibility = "hidden";
+			let formaV = document.getElementById('description');
+			formaV.style.visibility = "visible";
+			$.ajax({
+				url: '',
+				type: 'POST',
+				dataType: 'json',
+				data: id.toString(),
+				success: function (dataA){
+					document.getElementById('description').innerHTML = dataA[0];
+				},
+				error: function () {
+					document.getElementById('description').innerHTML = '';
+				}
+			});
+	}
+/*
   await myContract.methods.ownerOf(id).call()
     .then(async(data) => {
       document.getElementById('ownerOf').innerHTML = data;
@@ -278,59 +338,48 @@ async function read(id) {
     			});
             }
     });
+*/
 }
+
 
 var id_total;
 
 async function mint(id) {
-  var a = false;
-  const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-  let account = accounts[0];
-  let myContract = new web3.eth.Contract(abi, myAddress);
-  await myContract.methods.ownerOf(id).call()
-    .then((data) => {
-      console.log('This land is sold out');
-    })
-    .catch(async function (error) {
-      a = true;
-          let eth_amount = await myContract.methods.cost().call();
+	console.log('mint ', id);
 
-    let transa = await myContract.methods.mint(account, 1, id).send({from:account, value:eth_amount});
-    document.getElementById('ownerOf').innerHTML = account;
-    let sel = document.getElementById('#Id');
-    sel.style.visibility = "hidden";
-    });
+	const transaction = {
+    arguments: [id.toString()],
+    function: '0x1932569b5429a7f30e62de0bd4af8dbdba914e490577ad65d9c7f8fdb7a67dff::minting::mint_nft',
+    type: 'entry_function_payload',
+    type_arguments: [],
+    };
+
+  console.log('3');
+
+
+  const pendingTransaction = await window.aptos.signAndSubmitTransaction(transaction);
+  console.log('4');
+  // In most cases a dApp will want to wait for the transaction, in these cases you can use the typescript sdk
+  const client = new AptosClient('https://fullnode.devnet.aptoslabs.com');
+  const txn = await client.waitForTransactionWithResult(
+    pendingTransaction.hash,
+  );
+
+	//отправка транзакции
+  document.getElementById('ownerOf').innerHTML = account;
+	let sel = document.getElementById('#Id');
+  sel.style.visibility = "hidden";
+
+	read(id);
 }
 
-function bdwrite() {
-	$.ajax({
-		url: '',
-		type: 'post-db',
-		dataType: 'json'
-	});
-}
-
-// window.addEventListener("click", click);
-// function click(e) {
-//   let elem = document.elementFromPoint(e.pageX, e.pageY);
-//   if (elem.className == 'nft'){
-//     elem = elem.childNodes[1];
-//   }
-//   if (elem.className == 'nft_img'){
-//     if (openInfo == false && window.screen.width <= 500){
-//         document.getElementById('info').style.display = 'inline';
-//         document.getElementsByClassName('plus')[0].style.display = 'none';
-//         document.getElementById('map').style.display = 'none';
-// 	    openInfo = true;
-// 	}
-// 	read(elem.id);
-// 	let sel = document.getElementById('#Id');
-// 	sel.setAttribute('onclick','mint(' + elem.id + ')');
-//   }
+// function bdwrite() {
+// 	$.ajax({
+// 		url: '',
+// 		type: 'post-db',
+// 		dataType: 'json'
+// 	});
 // }
-
-
-
 
 
 function getBounding(image){
@@ -370,562 +419,3 @@ function closeInfo(){
     document.getElementsByClassName('plus')[0].style.display = 'block';
     document.getElementById('map').style.display = 'block';
 }
-
-let abi = [
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_symbol",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_initBaseURI",
-				"type": "string"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "approved",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "Approval",
-		"type": "event"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "operator",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "bool",
-				"name": "approved",
-				"type": "bool"
-			}
-		],
-		"name": "ApprovalForAll",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "approve",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_mintAmount",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_id_nft",
-				"type": "uint256"
-			}
-		],
-		"name": "mint",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bool",
-				"name": "_state",
-				"type": "bool"
-			}
-		],
-		"name": "pause",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "safeTransferFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bytes",
-				"name": "_data",
-				"type": "bytes"
-			}
-		],
-		"name": "safeTransferFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "operator",
-				"type": "address"
-			},
-			{
-				"internalType": "bool",
-				"name": "approved",
-				"type": "bool"
-			}
-		],
-		"name": "setApprovalForAll",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_newBaseExtension",
-				"type": "string"
-			}
-		],
-		"name": "setBaseExtension",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_newBaseURI",
-				"type": "string"
-			}
-		],
-		"name": "setBaseURI",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_newCost",
-				"type": "uint256"
-			}
-		],
-		"name": "setCost",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_newmaxMintAmount",
-				"type": "uint256"
-			}
-		],
-		"name": "setmaxMintAmount",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "Transfer",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "from",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "transferFrom",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_address",
-				"type": "address"
-			}
-		],
-		"name": "withdraw",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			}
-		],
-		"name": "balanceOf",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "baseExtension",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "baseURI",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "cost",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "getApproved",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "owner",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "operator",
-				"type": "address"
-			}
-		],
-		"name": "isApprovedForAll",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "maxMintAmount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "maxSupply",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "name",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "ownerOf",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "paused",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "supply",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes4",
-				"name": "interfaceId",
-				"type": "bytes4"
-			}
-		],
-		"name": "supportsInterface",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "symbol",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			}
-		],
-		"name": "tokenURI",
-		"outputs": [
-			{
-				"internalType": "string",
-				"name": "",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}
-];
