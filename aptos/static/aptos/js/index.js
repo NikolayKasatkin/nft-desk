@@ -307,7 +307,7 @@ async function mint(id) {
 			const transaction = await window.martian.generateTransaction(accountOwner, payload);
 			const txnHash = await window.martian.signAndSubmitTransaction(transaction);
 		}
-		document.getElementById('ownerOf').innerHTML = accountOwner;
+		// document.getElementById('ownerOf').innerHTML = accountOwner;
 		let sel = document.getElementById('#Id');
 	  sel.style.visibility = "hidden";
 
