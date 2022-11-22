@@ -1,7 +1,3 @@
-let myAddress = '0x95Ce19Ab4AF262711D4Af1974f1E03045e3d5527';
-
-const WEB3_PROVIDER = "https://mainnet.infura.io/v3/";
-
 //*************************** PETRA WALLET **********************************
 async function web3providerPetra(){
 	if (typeof window.aptos !== 'undefined') {
@@ -17,6 +13,11 @@ async function web3providerPetra(){
 }
 
 async function getAccountPetra() {
+	try {
+		if (window.martian._isConnected){
+			window.martian.disconnect();
+		}
+	}
 	let wallet = getPetraWallet();
 	try {
 		let response = await wallet.connect()
@@ -72,6 +73,14 @@ var getMartianWallet = () => {
 };
 
 async function getAccountMartian() {
+	try {
+		window.aptos.isConnected()
+		.then( (res) => {
+				if (res){
+					window.aptos.disconnect();
+				}
+		});
+	}
 	let wallet = getMartianWallet();
 	try {
 		let response = await wallet.connect()
@@ -162,9 +171,9 @@ async function PostAddressAccount() {
 				e = e || window.event;
 				var delta = e.deltaY || e.detail || e.wheelDelta;
 				if (bounding.width - delta*bounding.width/500 >= minMapSize && bounding.width - delta*bounding.width/500 <= maxMapSize){
-			    image.style.height = bounding.height - 2*delta*bounding.width/500 + 'px';
+			    image.style.height = bounding.height - delta*bounding.width/500 + 'px';
 			    image.style.width = bounding.width - delta*bounding.width/500 + 'px';
-			    image.style.top = bounding.top + 2*delta*(e.pageY-bounding.top)/bounding.height*bounding.width/500 + 'px';
+			    image.style.top = bounding.top + delta*(e.pageY-bounding.top)/bounding.height*bounding.width/500 + 'px';
 			    image.style.left = bounding.left + delta*(e.pageX-bounding.left)/bounding.width*bounding.width/500 + 'px';
 				}
 		  }
@@ -235,142 +244,73 @@ async function read(id) {
 
 	sorceImg = document.getElementById(id).style.backgroundImage.split('"')[1];
 	document.getElementById('idImg').src = sorceImg;
-	if (sorceImg == '/media/images/green.png') {
-			document.getElementById('ownerOf').innerHTML = 'This land in sale, buy it!';
-			sel.style.visibility = "visible";
-	} else {
-			document.getElementById('ownerOf').innerHTML = 'This land is sold out!';
-			sel.style.visibility = "hidden";
-			let formaV = document.getElementById('description');
-			formaV.style.visibility = "visible";
-			$.ajax({
-				url: '',
-				type: 'POST',
-				dataType: 'json',
-				data: id.toString(),
-				success: function (dataA){
-					document.getElementById('description').innerHTML = dataA[0];
-				},
-				error: function () {
-					document.getElementById('description').innerHTML = '';
-				}
-			});
-	}
-/*
-  await myContract.methods.ownerOf(id).call()
-    .then(async(data) => {
-      document.getElementById('ownerOf').innerHTML = data;
-			sel.style.visibility = "hidden";
-
-			const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-			let account = accounts[0];
-			let formaA = document.getElementById('pen');
-			if (data.toLowerCase() == account) {
-			    console.log('true');
-				formaA.style.display = "block";
-			} else {
-                console.log('false');
-				formaA.style.display = "none";
+	$.ajax({
+		url: '',
+		type: 'HASOWNER',
+		dataType: 'json',
+		data: id.toString(),
+		success: function (bo){
+			if (bo){
+				document.getElementById('ownerOf').innerHTML = 'This land is sold out!';
+				sel.style.visibility = "hidden";
+				let formaV = document.getElementById('description');
+				formaV.style.visibility = "visible";
+				$.ajax({
+					url: '',
+					type: 'POST',
+					dataType: 'json',
+					data: id.toString(),
+					success: function (dataA){
+						document.getElementById('description').innerHTML = dataA[0];
+					},
+					error: function () {
+						document.getElementById('description').innerHTML = '';
+					}
+				});
 			}
-
-			document.getElementById('idnft').innerHTML = 'Land № ' + id;
-			document.getElementById('idnft2').innerHTML = 'Land № ' + id;
-
-			let formaV = document.getElementById('description');
-			formaV.style.visibility = "visible";
-
-			$.ajax({
-				url: '',
-				type: 'post',
-				dataType: 'json',
-				data: id,
-				success: function (dataA){
-					document.getElementById('description').innerHTML = dataA[0];
-				},
-		    error: function () {
-					document.getElementById('description').innerHTML = '';
-				}
-			});
-
-			sorceImg = document.getElementById(id).src;
-
-			document.getElementById('idImg').src = sorceImg;
-
-			id_total = id;
-			document.getElementById('id_id_nft').innerHTML = id;
-
-    })
-    .catch(function (error) {
-
-			document.getElementById('idnft').innerHTML = 'Land № ' + id;
-			document.getElementById('idnft2').innerHTML = 'Land № ' + id;
-
-
-			let formaV = document.getElementById('description');
-			formaV.style.visibility = "hidden";
-
-			let formaA = document.getElementById('pen');
-			formaA.style.display = "none";
-
-			sorceImg = document.getElementById(id).src;
-			document.getElementById('idImg').src = sorceImg;
-
-            if (sorceImg == 'https://www.ndesk.io/media/images/green.png') {
-                document.getElementById('ownerOf').innerHTML = 'This land in sale, buy it!';
-                sel.style.visibility = "visible";
-            } else {
-                document.getElementById('ownerOf').innerHTML = 'This land is sold out!';
-                sel.style.visibility = "hidden";
-
-    			let formaV = document.getElementById('description');
-    			formaV.style.visibility = "visible";
-    			$.ajax({
-    				url: '',
-    				type: 'post',
-    				dataType: 'json',
-    				data: id,
-    				success: function (dataA){
-    					document.getElementById('description').innerHTML = dataA[0];
-    				},
-        		    error: function () {
-        					document.getElementById('description').innerHTML = '';
-        				}
-    			});
-            }
-    });
-*/
+			else {
+				document.getElementById('ownerOf').innerHTML = 'This land in sale, buy it!';
+				sel.style.visibility = "visible";
+			}
+		},
+		error: function () {
+		}
+	});
 }
 
 
 var id_total;
 
 async function mint(id) {
-	console.log('mint ', id);
+	window.aptos.isConnected()
+	.then( async (res) => {
+		if (res)
+		{
+			const transaction = {
+		    arguments: [id.toString()],
+		    function: '0x1932569b5429a7f30e62de0bd4af8dbdba914e490577ad65d9c7f8fdb7a67dff::minting::mint_nft',
+		    type: 'entry_function_payload',
+		    type_arguments: [],
+		    };
 
-	const transaction = {
-    arguments: [id.toString()],
-    function: '0x1932569b5429a7f30e62de0bd4af8dbdba914e490577ad65d9c7f8fdb7a67dff::minting::mint_nft',
-    type: 'entry_function_payload',
-    type_arguments: [],
-    };
+		  const pendingTransaction = await window.aptos.signAndSubmitTransaction(transaction);
+		}
+		else if (window.martian._isConnected)
+		{
+			const payload = {
+				function: '0x1932569b5429a7f30e62de0bd4af8dbdba914e490577ad65d9c7f8fdb7a67dff::minting::mint_nft',
+				type_arguments: [],
+				arguments: [id.toString()],
+			};
+			const transaction = await window.martian.generateTransaction(accountOwner, payload);
+			const txnHash = await window.martian.signAndSubmitTransaction(transaction);
+		}
+		document.getElementById('ownerOf').innerHTML = accountOwner;
+		let sel = document.getElementById('#Id');
+	  sel.style.visibility = "hidden";
 
-  console.log('3');
-
-
-  const pendingTransaction = await window.aptos.signAndSubmitTransaction(transaction);
-  console.log('4');
-  // In most cases a dApp will want to wait for the transaction, in these cases you can use the typescript sdk
-  const client = new AptosClient('https://fullnode.devnet.aptoslabs.com');
-  const txn = await client.waitForTransactionWithResult(
-    pendingTransaction.hash,
-  );
-
-	//отправка транзакции
-  document.getElementById('ownerOf').innerHTML = account;
-	let sel = document.getElementById('#Id');
-  sel.style.visibility = "hidden";
-
-	read(id);
+		read(id);
+	} );
 }
 
 // function bdwrite() {
@@ -398,9 +338,9 @@ function zoom(z){
 		let timerId = setInterval(function() {
 			var bounding = getBounding(image);
 			if (bounding.width + z*zoomCount*bounding.width/100/100 >= minMapSize && bounding.width + z*zoomCount*bounding.width/100/100 <= maxMapSize){
-				image.style.height = bounding.height + 2*z*zoomCount*bounding.width/100/100 + 'px';
+				image.style.height = bounding.height + z*zoomCount*bounding.width/100/100 + 'px';
 		    image.style.width = bounding.width + z*zoomCount*bounding.width/100/100 + 'px';
-		    image.style.top = bounding.top - 2*z*zoomCount*(window.innerHeight/2-bounding.top)/bounding.height*bounding.width/100/100 + 'px';
+		    image.style.top = bounding.top - z*zoomCount*(window.innerHeight/2-bounding.top)/bounding.height*bounding.width/100/100 + 'px';
 		    image.style.left = bounding.left - z*zoomCount*(window.innerWidth*0.625-bounding.left)/bounding.width*bounding.width/100/100 + 'px';
 			}
 			else{

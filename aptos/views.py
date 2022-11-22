@@ -13,6 +13,7 @@ import datetime as dt
 import time
 from django.shortcuts import redirect
 from .aptosSDK.balance_of import check_ownership
+from .aptosSDK.has_owner import get_token
 
 @csrf_exempt
 def index(request):
@@ -49,6 +50,11 @@ def index(request):
             idnft = str(request.body).split("'")[1].split('&')[0]
             owner_add = str(request.body).split("'")[1].split('&')[1]
             result = check_ownership(owner_add, "0x1932569b5429a7f30e62de0bd4af8dbdba914e490577ad65d9c7f8fdb7a67dff", "nft desk", idnft)
+            return JsonResponse(result, safe = False)
+
+        if request.method == 'HASOWNER':
+            idnft = str(request.body).split("'")[1]
+            result = get_token("0x1932569b5429a7f30e62de0bd4af8dbdba914e490577ad65d9c7f8fdb7a67dff", idnft)
             return JsonResponse(result, safe = False)
 
         if request.method == 'POST':

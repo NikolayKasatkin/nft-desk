@@ -6,10 +6,10 @@ html{
   /* margin-left: 50px; */
   /*margin-top: 9.5vh;*/
   /*margin-left: 40vw;*/
-  width: 40vh;
+  width: 80vh;
   height: 80vh;
   top:10vh;
-  left: 50vw;
+  left: 40vw;
   position:absolute;
   /* transform: scale(1, 1); */
   z-index: 1;
@@ -22,8 +22,8 @@ html{
 /*}*/
 .nft{
   box-sizing: border-box;
-  width: 2%;
-  height: 1%;
+  width: 1.42%;
+  height: 1.42%;
   float: left;
   display: inline-block;
    border: solid;
