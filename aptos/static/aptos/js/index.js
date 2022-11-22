@@ -158,6 +158,30 @@ async function PostAddressAccount() {
 	    };
 	  }
 
+		//обработка касаний
+		image.ontouchstart = function(e) {
+        var coords = getCoords(image);
+    	  var shiftX = e.pageX - coords.left;
+    	  var shiftY = e.pageY - coords.top;
+
+    	  moveAt(e);
+
+    	  function moveAt(e) {
+					image.style.left = e.pageX - shiftX + 'px';
+		      image.style.top = e.pageY - shiftY + 'px';
+    	  }
+
+    	  document.ontouchmove = function(e) {
+    	    moveAt(e);
+    	  };
+
+    	  image.ontouchend = function() {
+    	    document.ontouchmove = null;
+    	    image.ontouchend = null;
+    	  };
+      }
+
+
 	  function getCoords(elem) {   // кроме IE8-
 	    var box = elem.getBoundingClientRect();
 	    return {
