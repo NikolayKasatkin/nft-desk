@@ -18,6 +18,7 @@ async function getAccountPetra() {
 			window.martian.disconnect();
 		}
 	}
+	catch{}
 	let wallet = getPetraWallet();
 	try {
 		let response = await wallet.connect()
@@ -81,6 +82,7 @@ async function getAccountMartian() {
 				}
 		});
 	}
+	catch{}
 	let wallet = getMartianWallet();
 	try {
 		let response = await wallet.connect()
