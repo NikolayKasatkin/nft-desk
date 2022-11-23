@@ -314,7 +314,7 @@ async function mint(id) {
 		{
 			const transaction = {
 		    arguments: [id.toString()],
-		    function: '0x1932569b5429a7f30e62de0bd4af8dbdba914e490577ad65d9c7f8fdb7a67dff::minting::mint_nft',
+		    function: '0x326d48f03f246014badd4a43f772e6599617f31e57a2c1a1dfaeb3f5ed5aa1e2::minting::mint_nft',
 		    type: 'entry_function_payload',
 		    type_arguments: [],
 		    };
@@ -324,7 +324,7 @@ async function mint(id) {
 		else if (window.martian._isConnected)
 		{
 			const payload = {
-				function: '0x1932569b5429a7f30e62de0bd4af8dbdba914e490577ad65d9c7f8fdb7a67dff::minting::mint_nft',
+				function: '0x326d48f03f246014badd4a43f772e6599617f31e57a2c1a1dfaeb3f5ed5aa1e2::minting::mint_nft',
 				type_arguments: [],
 				arguments: [id.toString()],
 			};
