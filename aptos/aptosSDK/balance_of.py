@@ -1,11 +1,5 @@
-# Copyright (c) Aptos
-# SPDX-License-Identifier: Apache-2.0
-
-import json
-
-from aptos_sdk.account import Account
 from aptos_sdk.account_address import AccountAddress
-from aptos_sdk.client import FaucetClient, RestClient
+from aptos_sdk.client import RestClient
 
 from .common import NODE_URL
 
@@ -15,12 +9,14 @@ def check_ownership(owner_address, creator_address, collection_name, token_name)
 
     rest_client = RestClient(NODE_URL)
     property_version = 0
-
-    balance = rest_client.get_token_balance(owner_address, creator_address, collection_name, token_name, property_version)
-    rest_client.close()
-    if balance != '0':
-        return True
-    else:
+    try:
+        balance = rest_client.get_token_balance(owner_address, creator_address, collection_name, token_name, property_version)
+        rest_client.close()
+        if balance != '0':
+            return True
+        else:
+            return False
+    except:
         return False
 
 

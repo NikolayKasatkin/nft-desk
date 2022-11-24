@@ -13,7 +13,6 @@ async function web3providerPetra(){
 }
 
 
-
 async function getAccountPetra() {
 	try {
 		if (window.martian._isConnected){
@@ -209,13 +208,6 @@ async function PostAddressAccount() {
 			    image.style.top = bounding.top + (e.pageY-bounding.top)/bounding.height*deltaMBound + 'px';
 			    image.style.left = bounding.left + (e.pageX-bounding.left)/bounding.width*deltaMBound + 'px';
 				}
-				// оргинал приближения
-				// if (bounding.width - delta*bounding.width/500 >= minMapSize && bounding.width - delta*bounding.width/500 <= maxMapSize){
-			    // image.style.height = bounding.height - delta*bounding.width/500 + 'px';
-			    // image.style.width = bounding.width - delta*bounding.width/500 + 'px';
-			    // image.style.top = bounding.top + delta*(e.pageY-bounding.top)/bounding.height*bounding.width/500 + 'px';
-			    // image.style.left = bounding.left + delta*(e.pageX-bounding.left)/bounding.width*bounding.width/500 + 'px';
-				// }
 		  }
 		}
 
@@ -394,22 +386,6 @@ function zoom(z){
 			setTimeout(() => { clearInterval(timerId); }, 500);
 		}, 10);
   }
-
-  // if (document.elementFromPoint(window.innerWidth*0.625, window.innerHeight/2).className == 'nft' ||  document.elementFromPoint(window.innerWidth*0.625, window.innerHeight/2).className == 'map' || document.elementFromPoint(window.innerWidth*0.625, window.innerHeight/2).className == 'nft_img'){
-	// 	let timerId = setInterval(function() {
-	// 		var bounding = getBounding(image);
-	// 		if (bounding.width + z*zoomCount*bounding.width/100/100 >= minMapSize && bounding.width + z*zoomCount*bounding.width/100/100 <= maxMapSize){
-	// 			image.style.height = bounding.height + z*zoomCount*bounding.width/100/100 + 'px';
-	// 	    image.style.width = bounding.width + z*zoomCount*bounding.width/100/100 + 'px';
-	// 	    image.style.top = bounding.top - z*zoomCount*(window.innerHeight/2-bounding.top)/bounding.height*bounding.width/100/100 + 'px';
-	// 	    image.style.left = bounding.left - z*zoomCount*(window.innerWidth*0.625-bounding.left)/bounding.width*bounding.width/100/100 + 'px';
-	// 		}
-	// 		else{
-	// 			clearInterval(timerId);
-	// 		}
-	// 		setTimeout(() => { clearInterval(timerId); }, 500);
-	// 	}, 10);
-  // }
 }
 
 

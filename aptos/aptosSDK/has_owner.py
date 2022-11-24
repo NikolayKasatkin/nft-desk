@@ -5,8 +5,11 @@ from .common import NODE_URL
 
 def get_token(owner: AccountAddress, token_id):
         rest_client = RestClient(NODE_URL)
-        token_store_handle = RestClient.account_resource(rest_client, owner, f"{owner}::minting::ModuleData")['data']['tokens_name']
-        return token_id in token_store_handle
+        try:
+            token_store_handle = RestClient.account_resource(rest_client, owner, f"{owner}::minting::ModuleData")['data']['tokens_name']
+            return token_id in token_store_handle
+        except:
+            return False
 
 if __name__ == "__main__":
     token_id = '1'

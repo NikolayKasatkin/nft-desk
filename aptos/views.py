@@ -49,12 +49,12 @@ def index(request):
         if request.method == 'OWNEROF':
             idnft = str(request.body).split("'")[1].split('&')[0]
             owner_add = str(request.body).split("'")[1].split('&')[1]
-            result = check_ownership(owner_add, "0x1932569b5429a7f30e62de0bd4af8dbdba914e490577ad65d9c7f8fdb7a67dff", "nft desk", idnft)
+            result = check_ownership(owner_add, "0x326d48f03f246014badd4a43f772e6599617f31e57a2c1a1dfaeb3f5ed5aa1e2", "nft desk", idnft)
             return JsonResponse(result, safe = False)
 
         if request.method == 'HASOWNER':
             idnft = str(request.body).split("'")[1]
-            result = get_token("0x1932569b5429a7f30e62de0bd4af8dbdba914e490577ad65d9c7f8fdb7a67dff", idnft)
+            result = get_token("0x326d48f03f246014badd4a43f772e6599617f31e57a2c1a1dfaeb3f5ed5aa1e2", idnft)
             return JsonResponse(result, safe = False)
 
         if request.method == 'POST':
