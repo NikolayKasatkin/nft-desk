@@ -12,6 +12,8 @@ async function web3providerPetra(){
 	}
 }
 
+
+
 async function getAccountPetra() {
 	try {
 		if (window.martian._isConnected){
@@ -125,13 +127,13 @@ function handleAccountsChanged(accounts) {
 }
 
 
-var openInfo = false;
 
 var image;
 var maxMapSize;
 var minMapSize;
 
 async function PostAddressAccount() {
+		window.openInfo = false;
 		// карта
 		image = document.getElementById('map');
 		minMapSize = image.getBoundingClientRect().width;
@@ -161,14 +163,15 @@ async function PostAddressAccount() {
 		//обработка касаний
 		image.ontouchstart = function(e) {
         var coords = getCoords(image);
-    	  var shiftX = e.pageX - coords.left;
-    	  var shiftY = e.pageY - coords.top;
+
+    	  var shiftX = e.targetTouches[0].screenX - coords.left;
+    	  var shiftY = e.targetTouches[0].screenY - coords.top;
 
     	  moveAt(e);
 
     	  function moveAt(e) {
-					image.style.left = e.pageX - shiftX + 'px';
-		      image.style.top = e.pageY - shiftY + 'px';
+					image.style.left = e.targetTouches[0].screenX - shiftX + 'px';
+		      image.style.top = e.targetTouches[0].screenY - shiftY + 'px';
     	  }
 
     	  document.ontouchmove = function(e) {
@@ -196,12 +199,23 @@ async function PostAddressAccount() {
 		    var bounding = getBounding(image);
 				e = e || window.event;
 				var delta = e.deltaY || e.detail || e.wheelDelta;
-				if (bounding.width - delta*bounding.width/500 >= minMapSize && bounding.width - delta*bounding.width/500 <= maxMapSize){
-			    image.style.height = bounding.height - delta*bounding.width/500 + 'px';
-			    image.style.width = bounding.width - delta*bounding.width/500 + 'px';
-			    image.style.top = bounding.top + delta*(e.pageY-bounding.top)/bounding.height*bounding.width/500 + 'px';
-			    image.style.left = bounding.left + delta*(e.pageX-bounding.left)/bounding.width*bounding.width/500 + 'px';
+
+				// дополнительные переменные
+				var deltaMBound = delta*bounding.width/500;
+
+				if (bounding.width - deltaMBound >= minMapSize && bounding.width - deltaMBound <= maxMapSize){
+					image.style.height = bounding.height - deltaMBound + 'px';
+			    image.style.width = bounding.width - deltaMBound + 'px';
+			    image.style.top = bounding.top + (e.pageY-bounding.top)/bounding.height*deltaMBound + 'px';
+			    image.style.left = bounding.left + (e.pageX-bounding.left)/bounding.width*deltaMBound + 'px';
 				}
+				// оргинал приближения
+				// if (bounding.width - delta*bounding.width/500 >= minMapSize && bounding.width - delta*bounding.width/500 <= maxMapSize){
+			    // image.style.height = bounding.height - delta*bounding.width/500 + 'px';
+			    // image.style.width = bounding.width - delta*bounding.width/500 + 'px';
+			    // image.style.top = bounding.top + delta*(e.pageY-bounding.top)/bounding.height*bounding.width/500 + 'px';
+			    // image.style.left = bounding.left + delta*(e.pageX-bounding.left)/bounding.width*bounding.width/500 + 'px';
+				// }
 		  }
 		}
 
@@ -223,19 +237,12 @@ async function PostAddressAccount() {
 
 
 
-
-
-
-
-
-
-
 async function read(id) {
-	if (openInfo == false && window.screen.width <= 500){
+	if (window.openInfo == false && window.screen.width <= 500){
 			document.getElementById('info').style.display = 'inline';
 			document.getElementsByClassName('plus')[0].style.display = 'none';
 			document.getElementById('map').style.display = 'none';
-			openInfo = true;
+			window.openInfo = true;
 	}
 
   let sel = document.getElementById('#Id');
@@ -302,6 +309,7 @@ async function read(id) {
 		error: function () {
 		}
 	});
+
 }
 
 
@@ -360,14 +368,25 @@ function getBounding(image){
 
 function zoom(z){
 	var zoomCount = 500;
-  if (document.elementFromPoint(window.innerWidth*0.625, window.innerHeight/2).className == 'nft' ||  document.elementFromPoint(window.innerWidth*0.625, window.innerHeight/2).className == 'map' || document.elementFromPoint(window.innerWidth*0.625, window.innerHeight/2).className == 'nft_img'){
+	if (window.screen.width <= 500){
+		var xPoint = window.innerWidth/2;
+		var yPoint = window.innerHeight/2;
+	}
+	else {
+		var xPoint = window.innerWidth*0.625;
+		var yPoint = window.innerHeight/2;
+	}
+	var point = document.elementFromPoint(xPoint, yPoint);
+
+	if (point.className == 'nft' ||  point.className == 'map' || point.className == 'nft_img'){
 		let timerId = setInterval(function() {
 			var bounding = getBounding(image);
-			if (bounding.width + z*zoomCount*bounding.width/100/100 >= minMapSize && bounding.width + z*zoomCount*bounding.width/100/100 <= maxMapSize){
-				image.style.height = bounding.height + z*zoomCount*bounding.width/100/100 + 'px';
-		    image.style.width = bounding.width + z*zoomCount*bounding.width/100/100 + 'px';
-		    image.style.top = bounding.top - z*zoomCount*(window.innerHeight/2-bounding.top)/bounding.height*bounding.width/100/100 + 'px';
-		    image.style.left = bounding.left - z*zoomCount*(window.innerWidth*0.625-bounding.left)/bounding.width*bounding.width/100/100 + 'px';
+			var step = z*zoomCount*bounding.width/100/100;
+			if (bounding.width + step >= minMapSize && bounding.width + step <= maxMapSize){
+				image.style.height = bounding.height + step + 'px';
+		    image.style.width = bounding.width + step + 'px';
+		    image.style.top = bounding.top - (yPoint-bounding.top)/bounding.height*step + 'px';
+		    image.style.left = bounding.left - (xPoint-bounding.left)/bounding.width*step + 'px';
 			}
 			else{
 				clearInterval(timerId);
@@ -375,12 +394,28 @@ function zoom(z){
 			setTimeout(() => { clearInterval(timerId); }, 500);
 		}, 10);
   }
+
+  // if (document.elementFromPoint(window.innerWidth*0.625, window.innerHeight/2).className == 'nft' ||  document.elementFromPoint(window.innerWidth*0.625, window.innerHeight/2).className == 'map' || document.elementFromPoint(window.innerWidth*0.625, window.innerHeight/2).className == 'nft_img'){
+	// 	let timerId = setInterval(function() {
+	// 		var bounding = getBounding(image);
+	// 		if (bounding.width + z*zoomCount*bounding.width/100/100 >= minMapSize && bounding.width + z*zoomCount*bounding.width/100/100 <= maxMapSize){
+	// 			image.style.height = bounding.height + z*zoomCount*bounding.width/100/100 + 'px';
+	// 	    image.style.width = bounding.width + z*zoomCount*bounding.width/100/100 + 'px';
+	// 	    image.style.top = bounding.top - z*zoomCount*(window.innerHeight/2-bounding.top)/bounding.height*bounding.width/100/100 + 'px';
+	// 	    image.style.left = bounding.left - z*zoomCount*(window.innerWidth*0.625-bounding.left)/bounding.width*bounding.width/100/100 + 'px';
+	// 		}
+	// 		else{
+	// 			clearInterval(timerId);
+	// 		}
+	// 		setTimeout(() => { clearInterval(timerId); }, 500);
+	// 	}, 10);
+  // }
 }
 
 
 
 function closeInfo(){
-    openInfo = false;
+    window.openInfo = false;
     document.getElementById('info').style.display = 'none';
     document.getElementsByClassName('plus')[0].style.display = 'block';
     document.getElementById('map').style.display = 'block';

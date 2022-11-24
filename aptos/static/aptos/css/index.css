@@ -2,6 +2,10 @@ html{
   overflow:  hidden;
   touch-action: none;
 }
+body{
+  overflow:  hidden;
+  touch-action: none;
+}
 #map{
   /* margin-left: 50px; */
   /*margin-top: 9.5vh;*/
@@ -26,8 +30,9 @@ html{
   height: 1.42%;
   float: left;
   display: inline-block;
-   border: solid;
+  border: solid;
   border-width: 1px;
+  border-color: black;
   margin: 0 0 0 0;
   background-repeat: no-repeat;
   background-image: url("img.png");
@@ -630,8 +635,8 @@ filter: drop-shadow(0px 4px 24px rgba(0, 0, 0, 0.25));
     }
 
     #map{
-      width: 100vw;
-      height: 200vw;
+      width: 100vh;
+      height: 100vh;
       top:10vh;
       left:0px;
       position:absolute;
